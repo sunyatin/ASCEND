@@ -25,7 +25,7 @@ You can convert your file into EIGENSTRAT using the CONVERTF program (see https:
 
 To run an ASCEND analysis (minimal usage):
 
-`python ASCorrelation_v5.2.1.py -f prefix_of_the_EIGENSTRAT_files -p label_of_the_population_to_analyze -o output_file -maxProportionNA maximum_proportion_of_missing_data`
+`python3 ASCorrelation_v5.2.1.py -f prefix_of_the_EIGENSTRAT_files -p label_of_the_population_to_analyze -o output_file -maxProportionNA maximum_proportion_of_missing_data`
 
 By default, ASCEND assumes that the genetic positions are in centiMorgans and that the samples are diploid.
 
