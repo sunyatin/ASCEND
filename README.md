@@ -31,27 +31,33 @@ By default, ASCEND assumes that the genetic positions are in centiMorgans and th
 
 ### Mandatory parameters
 
-- `-f`
-- `-p`
-- `-o`
-- `-maxProportionNA`
+- `-f` input prefix of the EIGENSTRAT files (without any extension)
+- `-p` label of the population to analyze
+- `-o` name (with extension) of the output file
+- `-maxProportionNA` maximum proportion of missing data allowed in the allele sharing vectors to be considered in the calculation of the decay curve (recommended: -maxProportionNA 1)
 
 ### Optional parameters
 
-- `-r`
-- `-minMAF`
-- `-minD`
-- `-maxD`
-- `-stepD`
-- `--haploid`
-- `--pseudodiploidize`
-- `--Morgans`
-- `--chrom`
+- `-r OUTGROUP` label of the OUTGROUP population to use to compute the cross-population allele sharing correlation, if not specified, only the within-population allele correlation sharing will be computed
+- `-minMAF -1` minimum allele frequency, if a SNP has MAF>minMAF it is excluded (default: -1 meaning no filtering)
+- `-minD 0.1` minimum genetic distance in centiMorgans (default: 0.1 cM)
+- `-maxD 20.0` maximum genetic distance in centiMorgans (default: 20 cM)
+- `-stepD 0.1` size of the genetic distance bin (default: 0.1 cM)
+- `--haploid` add this switch if your genotypes are haploid
+- `--pseudodiploidize` add this switch if your genotypes have to be pseudodiploidized (i.e. for heterozygous genotypes, one allele will be randomly picked and set as two copies)
+- `--Morgans` add this switch if your input genetic distances are in Morgans (by default ASCEND assumes centiMorgans)
+- `--chrom CHROM` add this option to restrict the analysis to a specific chromosome CHROM 
 
 ## Output
 
-For each analysis, ASCEND outputs a single file with the following format:
-
+For each analysis, ASCEND outputs a single file with 7 columns:
+- `chrom` the chromosome numbers
+- `bin.left.bound` the left boundary of the genetic distance bins
+- `bin.center` the center of the genetic distance bins
+- `cov.pop` the within-population allele sharing correlation for the bin
+- `cov.bg` the cross-population allele sharing correlation for the bin
+- `cov.substracted` the within-population allele sharing correlation substracted by the cross-population for the bin
+- `n.pairs` the number of SNP pairs used in the calculation of the allele sharing correlation for the bin
 
 ## Example
 
