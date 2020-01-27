@@ -97,21 +97,14 @@ If you want to pick `n` random samples as an outgroup population from your origi
 
 The parameter file takes 8 arguments:
 
-`genotypename:` input_data.geno
-
-`snpname:` input_data.snp
-
-`indivname:` input_data.ind
-
-`genooutfilename:` output_data.geno
-
-`snpoutfilename:` output_data.snp
-
-`indoutfilename:` output_data.ind
-
-`outgroupsize:` number_of_outgroup_samples
-
-`targetpop:` target_population
+- `genotypename:` input_data.geno
+- `snpname:` input_data.snp
+- `indivname:` input_data.ind
+- `genooutfilename:` output_data.geno
+- `snpoutfilename:` output_data.snp
+- `indoutfilename:` output_data.ind
+- `outgroupsize:` number_of_outgroup_samples
+- `targetpop:` target_population
 
 The script will basically output the data subset to the target samples along with `number_of_outgroup_samples` individuals that have been set with the label `OUTGROUP`.
 
