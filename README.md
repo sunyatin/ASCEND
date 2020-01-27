@@ -55,6 +55,8 @@ Note that by default, ASCEND assumes that the genetic positions are in centiMorg
 
 For each analysis (if `onlyfit: NO`), ASCEND will output two files with extensions `.out` (the decay curves) and `.fit` (the fits) respectively. If `onlyfit: YES`, ASCEND will output only the `.fit` file.
 
+### `.out`
+
 The `.out` file contains the calculated decay curve and has 7 columns:
 - `chrom` the chromosome numbers
 - `bin.left.bound` the left boundary of the genetic distance bins
@@ -65,6 +67,8 @@ The `.out` file contains the calculated decay curve and has 7 columns:
 - `n.pairs` the number of SNP pairs used in the calculation of the allele sharing correlation for the bin
 
 Note that in case where you do not provide an outgroup population, the `cor.bg` and `cor.substracted` will be empty.
+
+### `.fit`
 
 The `.fit` file provides the estimates of the exponential model (that you can then use to estimate the founder age and the founder intensity) with their associated standard errors. To compute standard errors, the script performs a weighted block jackknife where blocks are the chromosomes and weights are their sizes or their number of SNPs (that are provided in the `blocksizename` file). We fit an exponential function of the form `z(d) = A exp(-2dt) + c` where `z(d)` is the allele sharing correlation at the genetic distance bin `d`, `A` is the amplitude and `t` is the rate of exponential decay. 
 
@@ -108,6 +112,8 @@ The parameter file takes 8 arguments:
 
 The script will basically output the data subset to the target samples along with `number_of_outgroup_samples` random individuals that have been set with the label `OUTGROUP`.
 
+### Full usage example
+
 Example of a full run using this outgroup strategy:
 
 `python3 pickoutgroups.py -p outgroup.par`
@@ -118,7 +124,7 @@ Example of a full run using this outgroup strategy:
 
 # Troubleshooting
 
-## UnicodeDecodeError
+### UnicodeDecodeError
 If your input are in PACKED EIGENSTRAT format (i.e. the geno file is compressed as a binmary), ASCEND will output an error:
 UnicodeDecodeError: 'utf-8' codec can't decode byte 0x86 in position 1936: invalid start byte
 
