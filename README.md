@@ -103,7 +103,7 @@ The parameter file takes 8 arguments:
 - `genooutfilename:` output_data.geno
 - `snpoutfilename:` output_data.snp
 - `indoutfilename:` output_data.ind
-- `outgroupsize:` number_of_outgroup_samples
+- `outgroupsize:` number_of_outgroup_samples (we recommand to use a size of 15 individuals)
 - `targetpop:` target_population
 
 The script will basically output the data subset to the target samples along with `number_of_outgroup_samples` random individuals that have been set with the label `OUTGROUP`.
