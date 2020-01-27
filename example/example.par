@@ -1,0 +1,17 @@
+genotypename: example.geno
+snpname: example.snp
+indivname: example.ind
+targetpop: Pop1
+outpop: Anc1800
+outputname: example.out
+binsize: 0.1
+mindis: 0
+maxdis: 30
+maxpropmissing: 1
+minmaf: 0
+haploid: NO
+dopseudodiploid: NO
+morgans: YES
+
+
+
