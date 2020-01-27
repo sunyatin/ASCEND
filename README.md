@@ -76,8 +76,8 @@ Command line: `python3 expfit_v8.py [parameters]`
 - `-p STRING` the name of the target population
 - `-o STRING` the prefix of the output file (the script will automatically add the extension .fit)
 - `-n STRING` the name of a file containing two tab-separated columns: (i) the chromosome label (should be the same as in the .snp file) and (ii) the number of SNPs on the chromosome or the chromosome length in bp
-- `minD FLOAT` the minimum genetic distance for the fitting (in centiMorgans)
-- `maxD 20.0` the maximum genetic distance for the fitting (in centiMorgans) (default: 20.0 cM)
+- `-minD FLOAT` the minimum genetic distance for the fitting (in centiMorgans)
+- `-maxD 20.0` the maximum genetic distance for the fitting (in centiMorgans) (default: 20.0 cM)
 - `--noBgLDSubstraction` add this switch if you do not want to subtract the within-population correlation by the cross-population correlation (default: we do the substraction if the cross-population column is not empty)
 
 ### Output
