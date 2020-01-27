@@ -1,0 +1,19 @@
+genotypename: example_OUTGROUP.geno
+snpname: example_OUTGROUP.snp
+indivname: example_OUTGROUP.ind
+targetpop: Pop1
+outpop: OUTGROUP
+outputprefix: example_OUTGROUP
+binsize: 0.1
+mindis: 0.1
+maxdis: 5.0
+maxpropmissing: 1
+minmaf: 0
+haploid: NO
+dopseudodiploid: NO
+morgans: NO
+blocksizename: example.chr
+onlyfit: NO
+
+
+
