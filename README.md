@@ -66,11 +66,11 @@ The `.out` file contains the calculated decay curve and has 7 columns:
 
 Note that in case where you do not provide an outgroup population, the `cor.bg` and `cor.substracted` will be empty.
 
-The `.fit` file provides the estimates of the exponential model (that you can then use to estimate the founder age and the founder intensity) with their associated standard errors. To compute standard errors, the script performs a weighted block jackknife where blocks are the chromosomes and weights are their sizes or their number of SNPs. We fit an exponential function of the form `z(d) = A exp(-2dt) + c` where `z(d)` is the allele sharing correlation at the genetic distance bin `d`, `A` is the amplitude and `t` is the rate of exponential decay. 
+The `.fit` file provides the estimates of the exponential model (that you can then use to estimate the founder age and the founder intensity) with their associated standard errors. To compute standard errors, the script performs a weighted block jackknife where blocks are the chromosomes and weights are their sizes or their number of SNPs (that are provided in the `blocksizename` file). We fit an exponential function of the form `z(d) = A exp(-2dt) + c` where `z(d)` is the allele sharing correlation at the genetic distance bin `d`, `A` is the amplitude and `t` is the rate of exponential decay. 
 
-The `.fit` file has XX columns:
+The `.fit` file has 7 columns:
 - `pop` the target population label
-- `chromosome` the chromosome number, or else `MEAN` for the parameter estimates when averaging the decay curves over all chromosomes, `MEAN.JK` for the jackknife mean estimate and `JK.SE` for the jackknife standard error.
+- `chromosome` the chromosome number, or else `MEAN` for the parameter estimates when averaging the decay curves over all chromosomes, `JK.MEAN` for the jackknife mean estimate and `JK.SE` for the jackknife standard error.
 - `A` the amplitude of the exponential model
 - `t` the exponential decay rate
 - `c` the affine term of the exponential model
@@ -82,6 +82,10 @@ The `.fit` file has XX columns:
 An example run is provided in the repository `example`. You can run it using the command:
 
 `python3 ASCEND_5.3.py example.par`
+
+To plot the decay curves with their associated fits, you can use the RScript:
+
+`RScript plot_ASCEND.R `
 
 ## Picking random samples as outgroups
 
