@@ -57,7 +57,7 @@ For each analysis (if `onlyfit: NO`), ASCEND will output two files with extensio
 
 ### `.out`
 
-The `.out` file contains the calculated decay curve and has 7 columns:
+The `.out` file contains the calculated decay curves over each chromosome and has 7 columns:
 - `chrom` the chromosome numbers
 - `bin.left.bound` the left boundary of the genetic distance bins
 - `bin.center` the center of the genetic distance bins
