@@ -91,7 +91,7 @@ The parameters of the `plot_ASCEND.R` script are: [decay_curve.out] [fits.fit] [
 
 ## Picking random samples as outgroups
 
-If you want to pick `n` random samples as an outgroup population from your original dataset, first run the following script:
+If you want to pick `n` random samples (random sampling without replacement) as an outgroup population from your original dataset, first run the following script:
 
 `python3 pickoutgroups.py -p NameOfTheParameterFile.par`
 
@@ -106,7 +106,7 @@ The parameter file takes 8 arguments:
 - `outgroupsize:` number_of_outgroup_samples
 - `targetpop:` target_population
 
-The script will basically output the data subset to the target samples along with `number_of_outgroup_samples` individuals that have been set with the label `OUTGROUP`.
+The script will basically output the data subset to the target samples along with `number_of_outgroup_samples` random individuals that have been set with the label `OUTGROUP`.
 
 Example of a full run using this outgroup strategy:
 
