@@ -1,19 +1,19 @@
 # ASCEND
 ASCEND (Allele Sharing Correlation for the Estimation of Nonequilibrium Demography) is a method to estimate the age and intensity of founder events (or bottlenecks) using population genotype data.
 
-## Installation
+# Installation
 
 ASCEND is a Python script and does not require prior installation apart specific modules (numpy) that you can install using the command:
 
 `pip3 install numpy`
 
-## Requirements
+# Requirements
 
 In its current implementation, ASCEND requires that your population is comprised of at least 5 samples.
 
 Since ASCEND relies on the recombination map, make sure your SNPs have the most accurate genetic position (see https://github.com/sunyatin/itara/blob/master/liftover.py to lift over a new genetic map using physical positions).
 
-## Input
+# Input
 
 ASCEND requires that the input data is in EIGENSTRAT format (see https://reich.hms.harvard.edu/software/InputFileFormats). The EIGENSTRAT format is comprised of three files:
 
@@ -23,7 +23,7 @@ ASCEND requires that the input data is in EIGENSTRAT format (see https://reich.h
 
 You can convert your file into EIGENSTRAT using the CONVERTF program (see https://github.com/argriffing/eigensoft/tree/master/CONVERTF).
 
-## Command line
+# Command line
 
 To run an ASCEND analysis:
 
@@ -31,7 +31,7 @@ To run an ASCEND analysis:
 
 Note that by default, ASCEND assumes that the genetic positions are in centiMorgans and that the samples are diploid.
 
-## Full list parameters
+# Full list parameters
 
 - `genotypename: STRING` name of the input geno file
 - `snpname: STRING` name of the input snp file
@@ -51,7 +51,7 @@ Note that by default, ASCEND assumes that the genetic positions are in centiMorg
 - `chrom: INT` add this option to restrict the analysis to a specific chromosome
 - `onlyfit: NO` set YES if you want to do the estimation of the parameters directly, using a file that has been already output by the script, with name `outputname.out` (default: NO)
 
-## Output
+# Output
 
 For each analysis (if `onlyfit: NO`), ASCEND will output two files with extensions `.out` (the decay curves) and `.fit` (the fits) respectively. If `onlyfit: YES`, ASCEND will output only the `.fit` file.
 
@@ -77,7 +77,7 @@ The `.fit` file has 7 columns:
 - `NRMSD` the root mean squared error of the exponential fit, standardized by the range of the fitted correlation values
 - `blocksize` for each chromosome, their corresponding weights
 
-## Full example
+# Full example
 
 An example run is provided in the repository `example`. You can run it using the command:
 
@@ -116,15 +116,15 @@ Example of a full run using this outgroup strategy:
 
 `Rscript plot_ASCEND.R example_OUTGROUP.out example_OUTGROUP.fit example_OUTGROUP.png TRUE 0.2`
 
-## Troubleshooting
+# Troubleshooting
 
-# UnicodeDecodeError
+## UnicodeDecodeError
 If your input are in PACKED EIGENSTRAT format (i.e. the geno file is compressed as a binmary), ASCEND will output an error:
 UnicodeDecodeError: 'utf-8' codec can't decode byte 0x86 in position 1936: invalid start byte
 
 To solve this problem, convert your input dataset to EIGENSTRAT using `convertf`: https://github.com/DReichLab/AdmixTools/tree/master/convertf
 
-## Support
+# Support
 Send queries to Remi Tournebize (remi dot tournebize at gmail dot com) or Priya Moorjani (moorjani at berkeley dot edu).
 
 
