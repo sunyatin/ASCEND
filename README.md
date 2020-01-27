@@ -27,7 +27,7 @@ You can convert your file into EIGENSTRAT using the CONVERTF program (see https:
 
 To run an ASCEND analysis:
 
-`python3 ASCEND.py [NameOfTheParameterFile]`
+`python3 ASCEND.py -p NameOfTheParameterFile.par`
 
 Note that by default, ASCEND assumes that the genetic positions are in centiMorgans and that the samples are diploid.
 
@@ -89,7 +89,27 @@ To plot the decay curves with their associated fits, you can use the RScript:
 
 ## Picking random samples as outgroups
 
+If you want to pick `n` random sample as outgroups from your original dataset, first run the following script:
 
+`python3 pickoutgroups.py -p NameOfTheParameterFile.par`
+
+The parameter file takes 8 arguments:
+
+`genotypename:` input_data.geno
+`snpname:` input_data.snp
+`indivname:` input_data.ind
+`genooutfilename:` output_data.geno
+`snpoutfilename:` output_data.snp
+`indoutfilename:` output_data.ind
+`outgroupsize:` number_of_outgroup_samples
+`targetpop:` target_population
+
+The script will basically output the data subset to the target samples with `number_of_outgroup_samples` individuals set with the label `OUTGROUP`.
+
+Example of a full run using this outgroup strategy:
+
+`python3 pickoutgroups.py -p outgroup.par`
+`python3 ASCEND_v6.py -p example_OUTGROUP.par`
 
 ## Troubleshooting
 
