@@ -85,7 +85,9 @@ An example run is provided in the repository `example`. You can run it using the
 
 To plot the decay curves with their associated fits, you can use the RScript:
 
-`RScript plot_ASCEND.R `
+`Rscript plot_ASCEND.R example.out example.fit example.png TRUE 0.2`
+
+The parameters of the `plot_ASCEND.R` script are: [decay_curve.out] [fits.fit] [output_fig_name.png] [TRUE or FALSE if you want to subtract the within-correlation by the cross-correlation or not] [NRMSD threshold]
 
 ## Picking random samples as outgroups
 
@@ -118,6 +120,8 @@ Example of a full run using this outgroup strategy:
 `python3 pickoutgroups.py -p outgroup.par`
 
 `python3 ASCEND_v6.py -p example_OUTGROUP.par`
+
+`Rscript plot_ASCEND.R example_OUTGROUP.out example_OUTGROUP.fit example_OUTGROUP.png TRUE 0.2`
 
 ## Troubleshooting
 
