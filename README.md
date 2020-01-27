@@ -64,11 +64,11 @@ Note that in case where you do not provide an outgroup population, the `cor.bg` 
 
 ## Estimating the founder event parameters with weighted block jackknife
 
-To estimate the founder event parameters (founder age and founder intensity) with their associated standard errors, run the exponential fitting script which performs a weighted block jackknife where blocks are the chromosomes and weights are their sizes or their number of SNPs. This script will fit an exponential function of the form `z(d) = A exp(-2dt) + c` where `z(d)` is the allele sharing correlation at the genetic distance bin `d`, `A` is the amplitude and `t` is the rate of exponential decay. We can then estimate the founder intensity as `I=exp(1)A` and the founder age as `T=100t` if the input genetic distances are in centiMorgans.
+To estimate the founder event parameters (founder age and founder intensity) with their associated standard errors, run the exponential fitting script which performs a weighted block jackknife where blocks are the chromosomes and weights are their sizes or their number of SNPs.
 
-To run the script:
+This script will fit an exponential function of the form `z(d) = A exp(-2dt) + c` where `z(d)` is the allele sharing correlation at the genetic distance bin `d`, `A` is the amplitude and `t` is the rate of exponential decay. We can then estimate the founder intensity as `I=exp(log(A)+1)` and the founder age as `T=100t`.
 
-`python3 expfit_v8.py [parameters]`
+Command line: `python3 expfit_v8.py [parameters]`
 
 ### Parameters
 
@@ -84,7 +84,7 @@ To run the script:
 
 This script will output a file with as many lines as chromosomes. The last three lines give, for each parameters in columns: the mean estimate, the jackknife mean estimate and the jackknife standard error estimate. The parameters of interest are in the 4th and 5th columns: `A`, `t`.
 
-## Example
+## Full example
 
 An example run is provided in the repository `example`. You can run it using the command:
 
@@ -92,7 +92,7 @@ An example run is provided in the repository `example`. You can run it using the
 
 Then for the jackknife:
 
-`python3 expfit_v8.py -f example.out -p Pop1 -o example.fit -n example.chr -minD 0.1 -maxD 30.0`
+`python3 expfit_v8.py -f example.out -p Pop1 -o example -n example.chr -minD 0.1 -maxD 30.0`
 
 ## Support
 Send queries to Remi Tournebize (remi dot tournebize at gmail dot com) or Priya Moorjani (moorjani at berkeley dot edu).
