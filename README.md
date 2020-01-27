@@ -3,7 +3,9 @@ ASCEND (Allele Sharing Correlation for the Estimation of Nonequilibrium Demograp
 
 ## Installation
 
-ASCEND is a Python script and does not require installation.
+ASCEND is a Python script and does not require prior installation apart specific modules (numpy) that you can install using the command:
+
+`pip3 install numpy`
 
 ## Requirements
 
@@ -30,23 +32,6 @@ To run an ASCEND analysis:
 Note that by default, ASCEND assumes that the genetic positions are in centiMorgans and that the samples are diploid.
 
 ### Full list parameters
-
-binsize:
-mindis:
-maxdis:
-
-maxpropmissing:
-minmaf:
-haploid:
-dopseudodiploid:
-morgans:
-
-
-chrom: 2
-
-
-
-
 
 - `genotypename: STRING` name of the input geno file
 - `snpname: STRING` name of the input snp file
