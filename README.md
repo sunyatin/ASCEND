@@ -78,7 +78,7 @@ The `.fit` file has 7 columns:
 - `A` the amplitude of the exponential model
 - `t` the exponential decay rate
 - `c` the affine term of the exponential model
-- `NRMSD` the root mean squared error of the exponential fit, standardized by the range of the fitted correlation values
+- `NRMSD` the root mean squared error of the exponential fit, normalized by the range of the fitted correlation values (range = max - min)
 - `blocksize` for each chromosome, their corresponding weights
 
 # Full example
@@ -92,6 +92,10 @@ To plot the decay curves with their associated fits, you can use the RScript:
 `Rscript plot_ASCEND.R example.out example.fit example.png TRUE 0.2`
 
 The parameters of the `plot_ASCEND.R` script are: [decay_curve.out] [fits.fit] [output_fig_name.png] [TRUE or FALSE if you want to subtract the within-correlation by the cross-correlation or not] [NRMSD threshold]
+
+This script will output a plot of the allele sharing correlation decay curve (black points) along with the fitted exponential model (red line). In the top-right corner it provides the estimates of founder age (Tf) and intensity (If) with their associated 95% confidence intervals within brackets as well as the NRMSD. Note that the plot will be grayed if the NRMSD is below the user-provided threshold or if the fitting failed or if any of the CI95% includes the value 0.
+
+The example provided is a simulation with 3 chromosomes of a founder event occurring 50 generations ago with intensity 10% so your estimates of Tf and If in the output plot should overlap with these numbers.
 
 ## Picking random samples as outgroups
 
