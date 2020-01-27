@@ -134,6 +134,10 @@ If your input are in PACKED EIGENSTRAT format (i.e. the .geno file is binary), A
 
 To solve this problem, you will have to convert your input dataset to EIGENSTRAT using `convertf`, cf. https://github.com/DReichLab/AdmixTools/tree/master/convertf
 
+# License
+
+This software is licensed for academic and non-profit use only.
+
 # Support
 Send queries to Remi Tournebize (remi dot tournebize at gmail dot com) or Priya Moorjani (moorjani at berkeley dot edu).
 
