@@ -23,30 +23,46 @@ You can convert your file into EIGENSTRAT using the CONVERTF program (see https:
 
 ## Command line
 
-To run an ASCEND analysis (minimal usage):
+To run an ASCEND analysis:
 
-`python3 ASCorrelation_v5.2.1.py -f prefix_of_the_EIGENSTRAT_files -p label_of_the_population_to_analyze -o output_file -maxProportionNA maximum_proportion_of_missing_data`
+`python3 ASCEND.py [NameOfTheParameterFile]`
 
-By default, ASCEND assumes that the genetic positions are in centiMorgans and that the samples are diploid.
+Note that by default, ASCEND assumes that the genetic positions are in centiMorgans and that the samples are diploid.
 
-### Mandatory parameters
+### Full list parameters
 
-- `-f` input prefix of the EIGENSTRAT files (without any extension)
-- `-p` label of the population to analyze
-- `-o` name (with extension) of the output file
-- `-maxProportionNA` maximum proportion of missing data allowed in the allele sharing vectors to be considered in the calculation of the decay curve (recommended: -maxProportionNA 1)
+binsize:
+mindis:
+maxdis:
 
-### Optional parameters
+maxpropmissing:
+minmaf:
+haploid:
+dopseudodiploid:
+morgans:
 
-- `-r OUTGROUP` label of the OUTGROUP population to use to compute the cross-population allele sharing correlation, if not specified, only the within-population allele correlation sharing will be computed
-- `-minMAF -1` minimum allele frequency, if a SNP has MAF>minMAF it is excluded (default: -1 meaning no filtering)
-- `-minD 0.1` minimum genetic distance in centiMorgans (default: 0.1 cM)
-- `-maxD 20.0` maximum genetic distance in centiMorgans (default: 20 cM)
-- `-stepD 0.1` size of the genetic distance bin (default: 0.1 cM)
-- `--haploid` add this switch if your genotypes are haploid
-- `--pseudodiploidize` add this switch if your genotypes have to be pseudodiploidized (i.e. for heterozygous genotypes, one allele will be randomly picked and set as two copies)
-- `--Morgans` add this switch if your input genetic distances are in Morgans (by default ASCEND assumes centiMorgans)
-- `--chrom CHROM` add this option to restrict the analysis to a specific chromosome CHROM 
+
+chrom: 2
+
+
+
+
+
+- `genotypename: STRING` name of the input geno file
+- `snpname: STRING` name of the input snp file
+- `indivname: STRING` name of the input ind file
+- `outputname: STRING` name of the output file
+- `targetpop: STRING` name of the target population to analyze
+- `outpop: STRING` name of the outgroup population (if not provided, ASCEND will not compute the cross-population correlation)
+- `maxpropmissing: 1` maximum proportion of missing data allowed in the allele sharing vectors to be considered in the calculation of the decay curve (default: 1.0)
+- `minmaf 0` minimum allele frequency, if a SNP has MAF>minMAF it is excluded (default: 0.0)
+- `mindis 0.1` minimum genetic distance in centiMorgans (default: 0.0 cM)
+- `maxdis 30.0` maximum genetic distance in centiMorgans (default: 30.0 cM)
+- `binsize 0.1` size of the genetic distance bin (default: 0.1 cM)
+- `haploid: NO` set YES if your genotypes are haploid (default: NO)
+- `dopseudodiploid: YES` set YES if your genotypes have to be pseudodiploidized (i.e. for heterozygous genotypes, one allele will be randomly picked and set as two copies) (default: NO)
+- `morgans: NO` set YES if your input genetic distances are in Morgans (by default ASCEND assumes centiMorgans) (default: NO)
+- `chrom: INT` add this option to restrict the analysis to a specific chromosome 
 
 ## Output
 
@@ -54,14 +70,18 @@ For each analysis, ASCEND outputs a single file with 7 columns:
 - `chrom` the chromosome numbers
 - `bin.left.bound` the left boundary of the genetic distance bins
 - `bin.center` the center of the genetic distance bins
-- `cov.pop` the within-population allele sharing correlation for the bin
-- `cov.bg` the cross-population allele sharing correlation for the bin
-- `cov.substracted` the within-population allele sharing correlation substracted by the cross-population for the bin
+- `cor.pop` the within-population allele sharing correlation for the bin
+- `cor.bg` the cross-population allele sharing correlation for the bin
+- `cor.substracted` the within-population allele sharing correlation substracted by the cross-population for the bin
 - `n.pairs` the number of SNP pairs used in the calculation of the allele sharing correlation for the bin
+
+Note that in case where you do not provide an outgroup population, the `cor.bg` and `cor.substracted` will be empty.
 
 ## Example
 
-An example run is provided in the repository `example`.
+An example run is provided in the repository `example`. You can run it using the command:
+
+`python3 ASCEND_5.3.py example.par`
 
 ## Support
 Send queries to Remi Tournebize (remi dot tournebize at gmail dot com) or Priya Moorjani (moorjani at berkeley dot edu).
