@@ -31,7 +31,7 @@ To run an ASCEND analysis:
 
 Note that by default, ASCEND assumes that the genetic positions are in centiMorgans and that the samples are diploid.
 
-### Full list parameters
+## Full list parameters
 
 - `genotypename: STRING` name of the input geno file
 - `snpname: STRING` name of the input snp file
@@ -62,11 +62,37 @@ For each analysis, ASCEND outputs a single file with 7 columns:
 
 Note that in case where you do not provide an outgroup population, the `cor.bg` and `cor.substracted` will be empty.
 
+## Estimating the founder event parameters with weighted block jackknife
+
+To estimate the founder event parameters (founder age and founder intensity) with their associated standard errors, run the exponential fitting script which performs a weighted block jackknife where blocks are the chromosomes and weights are their sizes or their number of SNPs. This script will fit an exponential function of the form `z(d) = A exp(-2dt) + c` where `z(d)` is the allele sharing correlation at the genetic distance bin `d`, `A` is the amplitude and `t` is the rate of exponential decay. We can then estimate the founder intensity as `I=exp(1)A` and the founder age as `T=100t` if the input genetic distances are in centiMorgans.
+
+To run the script:
+
+`python3 expfit_v8.py [parameters]`
+
+### Parameters
+
+- `-f STRING` the name of the file output by ASCEND
+- `-p STRING` the name of the target population
+- `-o STRING` the prefix of the output file (the script will automatically add the extension .fit)
+- `-n STRING` the name of a file containing two tab-separated columns: (i) the chromosome label (should be the same as in the .snp file) and (ii) the number of SNPs on the chromosome or the chromosome length in bp
+- `minD FLOAT` the minimum genetic distance for the fitting (in centiMorgans)
+- `maxD 20.0` the maximum genetic distance for the fitting (in centiMorgans) (default: 20.0 cM)
+- `--noBgLDSubstraction` add this switch if you do not want to subtract the within-population correlation by the cross-population correlation (default: we do the substraction if the cross-population column is not empty)
+
+### Output
+
+This script will output a file with as many lines as chromosomes. The last three lines give, for each parameters in columns: the mean estimate, the jackknife mean estimate and the jackknife standard error estimate. The parameters of interest are in the 4th and 5th columns: `A`, `t`.
+
 ## Example
 
 An example run is provided in the repository `example`. You can run it using the command:
 
 `python3 ASCEND_5.3.py example.par`
+
+Then for the jackknife:
+
+`python3 expfit_v8.py -f example.out -p Pop1 -o example.fit -n example.chr -minD 0.1 -maxD 30.0`
 
 ## Support
 Send queries to Remi Tournebize (remi dot tournebize at gmail dot com) or Priya Moorjani (moorjani at berkeley dot edu).
