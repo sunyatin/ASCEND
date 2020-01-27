@@ -94,6 +94,14 @@ Then for the jackknife:
 
 `python3 expfit_v8.py -f example.out -p Pop1 -o example -n example.chr -minD 0.1 -maxD 30.0`
 
+## Troubleshooting
+
+# UnicodeDecodeError
+If your input are in PACKED EIGENSTRAT format (i.e. the geno file is compressed as a binmary), ASCEND will output an error:
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0x86 in position 1936: invalid start byte
+
+To solve this problem, convert your input dataset to EIGENSTRAT using `convertf`: https://github.com/DReichLab/AdmixTools/tree/master/convertf
+
 ## Support
 Send queries to Remi Tournebize (remi dot tournebize at gmail dot com) or Priya Moorjani (moorjani at berkeley dot edu).
 
