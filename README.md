@@ -36,7 +36,8 @@ Note that by default, ASCEND assumes that the genetic positions are in centiMorg
 - `genotypename: STRING` name of the input geno file
 - `snpname: STRING` name of the input snp file
 - `indivname: STRING` name of the input ind file
-- `outputname: STRING` name of the output file
+- `blocksizename: STRING` the name of a file containing two tab-separated columns: (i) the chromosome label (should be the same as in the .snp file) and (ii) the number of SNPs on the chromosome or the chromosome length in bp
+- `outputprefix: STRING` prefix of the output file, ASCEND will automatically append the extension `.out`
 - `targetpop: STRING` name of the target population to analyze
 - `outpop: STRING` name of the outgroup population (if not provided, ASCEND will not compute the cross-population correlation)
 - `maxpropmissing: 1` maximum proportion of missing data allowed in the allele sharing vectors to be considered in the calculation of the decay curve (default: 1.0)
@@ -47,11 +48,14 @@ Note that by default, ASCEND assumes that the genetic positions are in centiMorg
 - `haploid: NO` set YES if your genotypes are haploid (default: NO)
 - `dopseudodiploid: YES` set YES if your genotypes have to be pseudodiploidized (i.e. for heterozygous genotypes, one allele will be randomly picked and set as two copies) (default: NO)
 - `morgans: NO` set YES if your input genetic distances are in Morgans (by default ASCEND assumes centiMorgans) (default: NO)
-- `chrom: INT` add this option to restrict the analysis to a specific chromosome 
+- `chrom: INT` add this option to restrict the analysis to a specific chromosome
+- `onlyfit: NO` set YES if you want to do the estimation of the parameters directly, using a file that has been already output by the script, with name `outputname.out` (default: NO)
 
 ## Output
 
-For each analysis, ASCEND outputs a single file with 7 columns:
+For each analysis (if `onlyfit: NO`), ASCEND will output two files with extensions `.out` (the decay curves) and `.fit` (the fits) respectively. If `onlyfit: YES`, ASCEND will output only the `.fit` file.
+
+The `.out` file contains the calculated decay curve and has 7 columns:
 - `chrom` the chromosome numbers
 - `bin.left.bound` the left boundary of the genetic distance bins
 - `bin.center` the center of the genetic distance bins
@@ -62,27 +66,16 @@ For each analysis, ASCEND outputs a single file with 7 columns:
 
 Note that in case where you do not provide an outgroup population, the `cor.bg` and `cor.substracted` will be empty.
 
-## Estimating the founder event parameters with weighted block jackknife
+The `.fit` file provides the estimates of the exponential model (that you can then use to estimate the founder age and the founder intensity) with their associated standard errors. To compute standard errors, the script performs a weighted block jackknife where blocks are the chromosomes and weights are their sizes or their number of SNPs. We fit an exponential function of the form `z(d) = A exp(-2dt) + c` where `z(d)` is the allele sharing correlation at the genetic distance bin `d`, `A` is the amplitude and `t` is the rate of exponential decay. 
 
-To estimate the founder event parameters (founder age and founder intensity) with their associated standard errors, run the exponential fitting script which performs a weighted block jackknife where blocks are the chromosomes and weights are their sizes or their number of SNPs.
-
-This script will fit an exponential function of the form `z(d) = A exp(-2dt) + c` where `z(d)` is the allele sharing correlation at the genetic distance bin `d`, `A` is the amplitude and `t` is the rate of exponential decay. We can then estimate the founder intensity as `I=exp(log(A)+1)` and the founder age as `T=100t`.
-
-Command line: `python3 expfit_v8.py [parameters]`
-
-### Parameters
-
-- `-f STRING` the name of the file output by ASCEND
-- `-p STRING` the name of the target population
-- `-o STRING` the prefix of the output file (the script will automatically add the extension .fit)
-- `-n STRING` the name of a file containing two tab-separated columns: (i) the chromosome label (should be the same as in the .snp file) and (ii) the number of SNPs on the chromosome or the chromosome length in bp
-- `-minD FLOAT` the minimum genetic distance for the fitting (in centiMorgans)
-- `-maxD 20.0` the maximum genetic distance for the fitting (in centiMorgans) (default: 20.0 cM)
-- `--noBgLDSubstraction` add this switch if you do not want to subtract the within-population correlation by the cross-population correlation (default: we do the substraction if the cross-population column is not empty)
-
-### Output
-
-This script will output a file with as many lines as chromosomes. The last three lines give, for each parameters in columns: the mean estimate, the jackknife mean estimate and the jackknife standard error estimate. The parameters of interest are in the 4th and 5th columns: `A`, `t`.
+The `.fit` file has XX columns:
+- `pop` the target population label
+- `chromosome` the chromosome number, or else `MEAN` for the parameter estimates when averaging the decay curves over all chromosomes, `MEAN.JK` for the jackknife mean estimate and `JK.SE` for the jackknife standard error.
+- `A` the amplitude of the exponential model
+- `t` the exponential decay rate
+- `c` the affine term of the exponential model
+- `NRMSD` the root mean squared error of the exponential fit, standardized by the range of the fitted correlation values
+- `blocksize` for each chromosome, their corresponding weights
 
 ## Full example
 
@@ -90,9 +83,9 @@ An example run is provided in the repository `example`. You can run it using the
 
 `python3 ASCEND_5.3.py example.par`
 
-Then for the jackknife:
+## Picking random samples as outgroups
 
-`python3 expfit_v8.py -f example.out -p Pop1 -o example -n example.chr -minD 0.1 -maxD 30.0`
+
 
 ## Troubleshooting
 
