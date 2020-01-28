@@ -23,6 +23,8 @@ ASCEND requires that the input data is in EIGENSTRAT format (see https://reich.h
 
 You can convert your file into EIGENSTRAT using the CONVERTF program (see https://github.com/argriffing/eigensoft/tree/master/CONVERTF).
 
+Note that the .geno file must not be compressed/binary.
+
 # Command line
 
 To run an ASCEND analysis:
@@ -37,20 +39,20 @@ For best performance, we advise to use at most 20-30 individuals for the target 
 
 # Full list parameters
 
-- `genotypename: STRING` name of the input geno file
-- `snpname: STRING` name of the input snp file
-- `indivname: STRING` name of the input ind file
+- `genotypename: STRING` name of the input .geno file
+- `snpname: STRING` name of the input .snp file
+- `indivname: STRING` name of the input .ind file
 - `blocksizename: STRING` the name of a file containing two tab-separated columns: (i) the chromosome label (should be the same as in the .snp file) and (ii) the number of SNPs on the chromosome or the chromosome length in bp
 - `outputprefix: STRING` prefix of the output file, ASCEND will automatically append the extension `.out`
 - `targetpop: STRING` name of the target population to analyze
 - `outpop: STRING` name of the outgroup population (if not provided, ASCEND will not compute the cross-population correlation)
 - `maxpropmissing: 1` maximum proportion of missing data allowed in the allele sharing vectors to be considered in the calculation of the decay curve (default: 1.0)
-- `minmaf: 0` minimum allele frequency, if a SNP has MAF>minMAF it is excluded (default: 0.0)
+- `minmaf: 0` minimum allele frequency, if a SNP has MAF<minMAF, it is excluded (default: 0.0)
 - `mindis: 0.1` minimum genetic distance in centiMorgans (default: 0.0 cM)
 - `maxdis: 30.0` maximum genetic distance in centiMorgans (default: 30.0 cM)
 - `binsize: 0.1` size of the genetic distance bin (default: 0.1 cM)
 - `haploid: NO` set YES if your genotypes are haploid (default: NO)
-- `dopseudodiploid: YES` set YES if your genotypes have to be pseudodiploidized (i.e. for heterozygous genotypes, one allele will be randomly picked and set as two copies) (default: NO)
+- `dopseudodiploid: YES` set YES if your genotypes have to be pseudodiploidized (i.e. for heterozygous genotypes, one allele will be randomly picked and set in two copies) (default: NO)
 - `morgans: NO` set YES if your input genetic distances are in Morgans (by default ASCEND assumes centiMorgans) (default: NO)
 - `chrom: INT` add this option to restrict the analysis to a specific chromosome
 - `onlyfit: NO` set YES if you want to do the estimation of the parameters directly, using a file that has been already output by the script, with name `outputname.out` (default: NO)
