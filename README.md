@@ -89,7 +89,7 @@ The `.fit` file has 7 columns:
 
 An example run is provided in the repository `example`. You can run it using the command:
 
-`python3 ASCEND_6.py example.par`
+`python3 ASCEND_6.py -p example.par`
 
 To plot the decay curves with their associated fits, you can use the RScript:
 
