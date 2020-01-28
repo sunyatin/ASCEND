@@ -64,15 +64,15 @@ For each analysis (if `onlyfit: NO`), ASCEND will output two files with extensio
 ### `.out`
 
 The `.out` file contains the calculated decay curves over each chromosome and has 7 columns:
-- `chrom` the chromosome numbers
+- `chrom` the chromosome number
 - `bin.left.bound` the left boundary of the genetic distance bins
 - `bin.center` the center of the genetic distance bins
 - `cor.pop` the within-population allele sharing correlation for the bin
 - `cor.bg` the cross-population allele sharing correlation for the bin
-- `cor.substracted` the within-population allele sharing correlation substracted by the cross-population for the bin
+- `cor.substracted` the within-population allele sharing correlation subtracted by the cross-population for the bin
 - `n.pairs` the number of SNP pairs used in the calculation of the allele sharing correlation for the bin
 
-Note that in case where you do not provide an outgroup population, the `cor.bg` and `cor.substracted` will be empty.
+Note that in case where you do not provide an outgroup population, the `cor.bg` and `cor.substracted` will be output with `nan` as values.
 
 ### `.fit`
 
@@ -80,20 +80,20 @@ The `.fit` file provides the estimates of the exponential model (that you can th
 
 The `.fit` file has 7 columns:
 - `pop` the target population label
-- `chromosome` the chromosome number, or else `MEAN` for the parameter estimates when averaging the decay curves over all chromosomes, `JK.MEAN` for the jackknife mean estimate and `JK.SE` for the jackknife standard error.
+- `chromosome` the chromosome number, or else `MEAN` for the parameter estimates when averaging the decay curves over all chromosomes, `JK.MEAN` for the jackknife mean estimate and `JK.SE` for the jackknife standard error
 - `A` the amplitude of the exponential model
 - `t` the exponential decay rate
 - `c` the affine term of the exponential model
-- `NRMSD` the root mean squared error of the exponential fit, normalized by the range of the fitted correlation values (range = max - min)
-- `blocksize` for each chromosome, their corresponding weights
+- `NRMSD` the root mean squared error of the exponential fit, normalized by the range of the fitted allele sharing correlation values (range = max - min)
+- `blocksize` the chromosome weights
 
 # Full example
 
-An example run is provided in the repository `example`. You can run it using the command:
+An example run is provided in the repository `example`. You can re-run it using the command:
 
 `python3 ASCEND_6.py -p example.par`
 
-To plot the decay curves with their associated fits, you can use the RScript:
+To plot the decay curves with their associated fits, you can use the R script:
 
 `Rscript plot_ASCEND.R example.out example.fit example.png TRUE 0.2`
 
@@ -109,7 +109,7 @@ If you want to pick `n` random samples (random sampling without replacement) as 
 
 `python3 pickoutgroups.py -p NameOfTheParameterFile.par`
 
-The parameter file takes 8 arguments:
+The parameter file takes 8 arguments and 1 optional (`seed`):
 
 - `genotypename: STRING` the input .geno file
 - `snpname: STRING` the input .snp file
@@ -117,13 +117,13 @@ The parameter file takes 8 arguments:
 - `genooutfilename: STRING` the output .geno file
 - `snpoutfilename: STRING` the output .snp file
 - `indoutfilename: STRING` the output .ind file
-- `outgroupsize: INT` number of outgroup individuals to sample (we recommand to use a size of 15 individuals)
+- `outgroupsize: INT` number of outgroup individuals to sample (we recommand a size of 15 individuals)
 - `targetpop: STRING` the label of the target population
 - `seed: INT` a seed for the random sampling of outgroup individuals (if this option is not provided, will use the current timestamp as a seed)
 
-The script will basically output the data subset to the target samples along with `outgroupsize` random individuals that have been set with the label `OUTGROUP`.
+The script will basically output the data subset to the target samples along with `outgroupsize` random individuals that have been set with the population label `OUTGROUP`.
 
-Note that if you use ASCEND after `pickoutgroups.py`, make sure that the option `outpop` in ASCEND is equal to:
+Note that if you use ASCEND after `pickoutgroups.py`, make sure that the option `outpop` in ASCEND is set as:
 
 `outpop: OUTGROUP`
 
