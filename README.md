@@ -31,6 +31,10 @@ To run an ASCEND analysis:
 
 Note that by default, ASCEND assumes that the genetic positions are in centiMorgans and that the samples are diploid.
 
+For reliable estimation, use a minimum of 5 diploids in the target and outgroup populations.
+
+For best performance, we advise to use at most 20-30 individuals for the target and ~15 individuals for the outgroup population.
+
 # Full list parameters
 
 - `genotypename: STRING` name of the input geno file
@@ -105,14 +109,15 @@ If you want to pick `n` random samples (random sampling without replacement) as 
 
 The parameter file takes 8 arguments:
 
-- `genotypename:` input_data.geno
-- `snpname:` input_data.snp
-- `indivname:` input_data.ind
-- `genooutfilename:` output_data.geno
-- `snpoutfilename:` output_data.snp
-- `indoutfilename:` output_data.ind
-- `outgroupsize:` number_of_outgroup_samples (we recommand to use a size of 15 individuals)
-- `targetpop:` target_population
+- `genotypename: STRING` the input .geno file
+- `snpname: STRING` the input .snp file
+- `indivname: STRING` the input .ind file
+- `genooutfilename: STRING` the output .geno file
+- `snpoutfilename: STRING` the output .snp file
+- `indoutfilename: STRING` the output .ind file
+- `outgroupsize: INT` number of outgroup individuals to sample (we recommand to use a size of 15 individuals)
+- `targetpop: STRING` the label of the target population
+- `seed: INT` a seed for the random sampling of outgroup individuals (if this option is not provided, will use the current timestamp as a seed)
 
 The script will basically output the data subset to the target samples along with `number_of_outgroup_samples` random individuals that have been set with the label `OUTGROUP`.
 
