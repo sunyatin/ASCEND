@@ -55,7 +55,7 @@ For best performance, we advise to use at most 20-30 individuals for the target 
 - `dopseudodiploid: YES` set YES if your genotypes have to be pseudodiploidized (i.e. for heterozygous genotypes, one allele will be randomly picked and set in two copies) (default: NO)
 - `morgans: NO` set YES if your input genetic distances are in Morgans (by default ASCEND assumes centiMorgans) (default: NO)
 - `chrom: INT` add this option to restrict the analysis to a specific chromosome
-- `onlyfit: NO` set YES if you want to do the estimation of the parameters directly, using a file that has been already output by the script, with name `outputname.out` (default: NO)
+- `onlyfit: NO` set YES if you want to do the estimation of the parameters directly, using a file that has been already output by the script, with a prefix provided in the option `outputprefix` (ASCEND assumes the extension is .out by default) (default: NO)
 
 # Output
 
