@@ -119,7 +119,11 @@ The parameter file takes 8 arguments:
 - `targetpop: STRING` the label of the target population
 - `seed: INT` a seed for the random sampling of outgroup individuals (if this option is not provided, will use the current timestamp as a seed)
 
-The script will basically output the data subset to the target samples along with `number_of_outgroup_samples` random individuals that have been set with the label `OUTGROUP`.
+The script will basically output the data subset to the target samples along with `outgroupsize` random individuals that have been set with the label `OUTGROUP`.
+
+Note that if you use ASCEND after `pickoutgroups.py`, make sure that the option `outpop` in ASCEND is equal to:
+
+`outpop: OUTGROUP`
 
 ### Full usage example
 
