@@ -55,14 +55,14 @@ Note that you can comment any line and option using "#" (the software will ignor
 
 *Related to genetic data*
 
-- `chrom: [INT]` add this option to restrict the analysis to a specific chromosome
+- `chrom: [INT]` add this option to restrict the analysis to a specific chromosome, specifying which chromosome to consider
 - `haploid: NO` ASCEND assumes genotypes are diploid but if you set this option to YES it will interpret your genotypes as haploid (default: NO)
 - `dopseudodiploid: YES` set YES if your genotypes have to be pseudodiploidized (i.e. for heterozygous genotypes, one allele will be randomly picked and set in two copies) (default: NO)
 
 *Related to SNP filtering*
 
-- `maxpropsharingmissing: 1.0` maximum proportion of missing allele sharing items allowed, above this threshold the SNP will be discarded (default: 1.0)
-- `minmaf: 0` minimum Minor Allele Frequency that is allowed for a SNP to be taken into account, i.e. if a SNP has MAF<minMAF, it will be excluded (default: 0.0)
+- `maxpropsharingmissing: 1.0` maximum proportion of missing allele sharing allowed (above this threshold the SNP will be discarded) (default: 1.0)
+- `minmaf: 0` minimum Minor Allele Frequency that is allowed for a SNP to be taken into account, i.e. if a SNP has `MAF<minmaf` or `MAF=minmaf`, it will be excluded (default: 0.0)
 
 *Related to the decay curve parameters*
 
@@ -73,13 +73,13 @@ Note that you can comment any line and option using "#" (the software will ignor
 
 *Related to the algorithm*
 
-- `usefft: YES` whether to use the Mesh + Fast Fourier Transforms (FFT) algorithm which speeds up the calculation by up to 8,000 times with only marginal approximations, note that if you have less than 10,000 SNPs per chromosome, we would advice using the naive algorithm i.e. setting `usefft: NO` (default: YES)
-- `qbins: 100` number of mesh points within each bins of the decay curve to consider for the mesh-FFT approximation (a higher number increases the mesh resolution and hence the accuracy of the decay curve) (default: 100)
+- `usefft: YES` whether to use the Mesh + Fast Fourier Transforms (FFT) algorithm which speeds up the calculation by up to 8,000 times with only marginal approximations, note that if you have less than 10,000 SNPs per chromosome, we would advice using the naive algorithm instead (i.e. use `usefft: NO`) (default: YES)
+- `qbins: 100` number of mesh points within each bins of the decay curve to consider for the mesh-FFT approximation (a higher number increases the mesh resolution and hence the accuracy of the decay curve, but also slows down the computation - we found that 100 was a good compromise between speed and accuracy) (default: 100)
 
 *Related to the fitting*
 
-- `onlyfit: NO` set YES if you want to do the estimation of the parameters directly, using files that have been already output by the script (default: NO)
-- `blocksizename: [STRING]` add this option to indicate the name of a file containing the per-chromosome weights to use for the weighted jackknife analysis; the file has two tab-separated columns: (i) the chromosome label (should be the same as in the .snp file) and (ii) the number of SNPs on the chromosome or the chromosome length in bp; if this option is not provided, ASCEND will automatically calculate the chromosome weights as the number of SNPs in the input .snp file.
+- `onlyfit: NO` set YES if you want to do the estimation of the parameters directly, using the `.out` and `.perchr.out` files that have been already output by the script (using `onlyfit: YES` can be dangerous, if you have any doubt, we would advice to rerun the all analysis) (default: NO)
+- `blocksizename: [STRING]` add this option to indicate the name of a file containing the per-chromosome weights to use for the weighted jackknife analysis; the file must have two tab-separated columns: (i) the chromosome label (should be the same as in the .snp file) and (ii) the number of SNPs on the chromosome or the chromosome length in bp; if this option is not provided, ASCEND will automatically calculate the weight of each chromosome as the number of SNPs in the input .snp file.
 
 # Output
 
@@ -91,11 +91,11 @@ The log file.
 
 ### `.png`
 
-This script will output a plot of the allele sharing correlation decay curve (blue points) along with the fitted exponential model (red line). In the top-right corner it provides the estimates of founder age (Tf) and intensity (If) with their associated 95% confidence intervals within brackets as well as the NRMSD.
+This script will output a plot of the allele sharing correlation decay curve (blue points) along with the fitted exponential model (red line). In the top-right corner: the estimates of founder age (Tf) and intensity (If) with their associated 95% confidence intervals within brackets as well as the NRMSD.
 
 ### `.qweights`
 
-If the `blocksizename` option was not provided, a file giving the weights for each chromosome (= their number of SNPs).
+If the `blocksizename` option was not provided, a file giving the weights for each chromosome (= number of SNPs).
 
 ### `.out`
 
@@ -105,43 +105,43 @@ The `.out` file contains the average allele sharing correlation averaged over al
 - `mean.cor.pop` the within-population average allele sharing correlation values
 - `mean.cor.bg` the cross-population average allele sharing correlation values
 - `mean.cor.substracted` the within-population average allele sharing correlation subtracted by the cross-population
-- `n.pairs` the number of SNP pairs * individual pairs used for the calculation of the statistics
+- `n.pairs` the number of well-defined SNP pairs * individual pairs used for the calculation of the statistics
 
-Note that in case where you do not provide an outgroup population, the `cor.bg` and `cor.substracted` will be output with `nan` as values.
+Note that in case where you do not provide an outgroup population, the `cor.bg` and `cor.substracted` will have `nan` values.
 
 ### `.perchrom.out`
 
-The `.perchrom.out` file contains the average allele sharing correlation for each chromosome:
+The `.perchrom.out` file contains the allele sharing correlation for each chromosome:
 
 - `chrom` the chromosome number
-- `bin.left.bound` the left boundary of the genetic distance bins
+- `bin.left.bound` the left boundary of the genetic distance bins in cM
 - `sum.cor.pop` the sum of within-population allele sharing correlation values over `n.pairs`
 - `sum.cor.bg` the sum of cross-population allele sharing correlation values over `n.pairs`
 - `sum.cor.substracted` the sum of within-population allele sharing correlation subtracted by the cross-population over `n.pairs`
-- `n.pairs` the number of SNP pairs * individual pairs used for the calculation of the statistics
+- `n.pairs` the number of well-defined SNP pairs * individual pairs used for the calculation of the statistics
 
 ### `.perjk.outs`
 
 The `.perjk.outs` file contains the average allele sharing correlation values calculated for each jackknife run:
 
 - `run` the jackknife run
-- `bin.left.bound` the left boundary of the genetic distance bins
+- `bin.left.bound` the left boundary of the genetic distance bins in cM
 - `mean.cor.pop` the within-population average allele sharing correlation values
 - `mean.cor.bg` the cross-population average allele sharing correlation values
 - `mean.cor.substracted` the within-population average allele sharing correlation subtracted by the cross-population
-- `n.pairs` the number of SNP pairs * individual pairs used for the calculation of the statistics
+- `n.pairs` the number of well-defined SNP pairs * individual pairs used for the calculation of the statistics
 
 ### `.fit`
 
-The `.fit` file provides the estimates of the exponential model (that you can then use to estimate the founder age and the founder intensity) with their associated standard errors. To compute standard errors, the script performs a weighted block jackknife where blocks are the chromosomes and weights are their sizes or their number of SNPs (that are provided in the `blocksizename` file). We fit an exponential function of the form `z(d) = A exp(-2dt) + c` where `z(d)` is the allele sharing correlation at the genetic distance bin `d`, `A` is the amplitude and `t` is the rate of exponential decay. 
+The `.fit` file provides the estimates of the exponential model (that you can then use to estimate the founder age and the founder intensity) with their associated standard errors. To compute standard errors, the script performs a weighted block jackknife where blocks are the chromosomes and weights are their sizes or their number of SNPs. We fit an exponential function of the form `z(d) = A exp(-2dt) + c` where `z(d)` is the average allele sharing correlation at the genetic distance bin `d`, `A` is the amplitude and `t` is the rate of exponential decay. 
 
 The `.fit` file has 4 columns:
 - `param` the name of the parameter
 - `mean` the point estimate of the parameters using the decay curve averaged over all chromosomes
-- `jk.mean` the point estimate of the parameters based on the jackknife
-- `jk.se` the standard error of the parameter estimates based on the jackknife
+- `jk.mean` the point estimate of the parameters based on the jackknife procedure
+- `jk.se` the standard error of the parameter estimates based on the jackknife procedure
 
-There is a line for each parameter (A, t, c) + a line for the Normalized Root Mean Squared Deviation (NRMSD) calculated between the empirical decay curve and the theoretical decay curve predicted using the corresponding estimates of the exponential parameters.
+There is a line for each parameter (A, t, c) + a line for the Normalized Root Mean Squared Deviation (NRMSD) calculated between the empirical decay curve and the theoretical decay curve.
 
 ### `.perjk.fits`
 
@@ -149,9 +149,9 @@ The file contains the estimated exponential parameters for each jackknife run:
 
 - `run` the jackknife run
 - `A` the amplitude of the exponential function
-- `t` the rate of exponential decay
-- `c` the affine
-- `blockweights` the weight of the chromosome that was removed for the jackknife run
+- `t` the rate of the exponential decay
+- `c` the affine term
+- `blockweights` the weight of the chromosome that was removed from the jackknife run
 
 # Full example
 
@@ -179,11 +179,11 @@ The parameter file takes 8 arguments and 1 optional (`seed`):
 - `targetpop: [STRING]` the label of the target population
 - `seed: [INT]` a seed for the random sampling of outgroup individuals (if this option is not provided, will use the current timestamp as a seed)
 
-The script will basically output the data subset to the target samples along with `outgroupsize` random individuals that have been set with the population label `OUTGROUP`.
+The script will basically output the genotype matrix for the target samples along with `outgroupsize` random individuals that have been set with the population label `OUTGROUP`.
 
 Note that if you use ASCEND after `pickoutgroups.py`, make sure that the option `outpop` in ASCEND is set as:
 
-`outpop: OUTGROUP`
+  `outpop: OUTGROUP`
 
 ### Full usage example
 
@@ -191,7 +191,7 @@ Example of a full run using this outgroup strategy:
 
 `python3 pickoutgroups.py -p outgroup.par`
 
-`python3 ASCEND_v6.py -p example_OUTGROUP.par`
+`python3 ASCEND.py -p example_OUTGROUP.par`
 
 # Troubleshooting
 
