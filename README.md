@@ -11,7 +11,7 @@ ASCEND is a Python3 script and does not require prior installation apart specifi
 
 In its current implementation, ASCEND requires that your population is comprised of at least 5 samples.
 
-Since ASCEND relies on the recombination map, make sure your SNPs have the most accurate genetic position (see https://github.com/sunyatin/itara/blob/master/liftover.py to lift over a new genetic map using physical positions).
+Since ASCEND relies on the recombination map, make sure your SNPs have the most accurate genetic positions (see https://github.com/sunyatin/itara/blob/master/liftover.py to lift over).
 
 # Input
 
