@@ -3,7 +3,7 @@ ASCEND (Allele Sharing Correlation for the Estimation of Nonequilibrium Demograp
 
 # Installation
 
-ASCEND is a Python script and does not require prior installation apart specific modules (numpy) that you can install using the command:
+ASCEND is a Python script and does not require prior installation apart specific modules (numpy, scipy) that you can install using the command:
 
 `pip3 install numpy`
 
@@ -29,9 +29,9 @@ Note that the .geno file must not be compressed/binary.
 
 To run an ASCEND analysis:
 
-`python3 ASCEND_v6.py -p NameOfTheParameterFile.par`
+`python3 ASCEND.py -p [NameOfTheParameterFile].par`
 
-Note that by default, ASCEND assumes that the genetic positions are in centiMorgans and that the samples are diploid.
+Note that by default, ASCEND assumes that the genetic positions are in Morgans and that the samples are diploid.
 
 For reliable estimation, use a minimum of 5 diploids in the target and outgroup populations.
 
@@ -39,23 +39,47 @@ For best performance, we advise to use at most 20-30 individuals for the target 
 
 # Full list parameters
 
+Note that you can comment any line and option using "#" (the software will ignore those lines). Also, the options can be written in any order.
+
+*Mandatory options*
+
 - `genotypename: STRING` name of the input .geno file
 - `snpname: STRING` name of the input .snp file
 - `indivname: STRING` name of the input .ind file
-- `blocksizename: STRING` the name of a file containing two tab-separated columns: (i) the chromosome label (should be the same as in the .snp file) and (ii) the number of SNPs on the chromosome or the chromosome length in bp
-- `outputprefix: STRING` prefix of the output file, ASCEND will automatically append the extension `.out`
+- `outputprefix: STRING` prefix of the output file, ASCEND will automatically append the appropriate extensions of the output files
 - `targetpop: STRING` name of the target population to analyze
-- `outpop: STRING` name of the outgroup population (if not provided, ASCEND will not compute the cross-population correlation)
-- `maxpropmissing: 1` maximum proportion of missing data allowed in the allele sharing vectors to be considered in the calculation of the decay curve (default: 1.0)
-- `minmaf: 0` minimum allele frequency, if a SNP has MAF<minMAF, it is excluded (default: 0.0)
-- `mindis: 0.1` minimum genetic distance in centiMorgans (default: 0.0 cM)
-- `maxdis: 30.0` maximum genetic distance in centiMorgans (default: 30.0 cM)
-- `binsize: 0.1` size of the genetic distance bin (default: 0.1 cM)
-- `haploid: NO` set YES if your genotypes are haploid (default: NO)
-- `dopseudodiploid: YES` set YES if your genotypes have to be pseudodiploidized (i.e. for heterozygous genotypes, one allele will be randomly picked and set in two copies) (default: NO)
-- `morgans: NO` set YES if your input genetic distances are in Morgans (by default ASCEND assumes centiMorgans) (default: NO)
+
+*Optional options (if not provided, ASCEND will take the default values)*
+
+- `outpop: STRING` name of the outgroup population (if not provided, ASCEND will not compute the cross-population correlation and will output NaN in the corresponding column)
+
+Related to genetic data
+
 - `chrom: INT` add this option to restrict the analysis to a specific chromosome
-- `onlyfit: NO` set YES if you want to do the estimation of the parameters directly, using a file that has been already output by the script, with a prefix provided in the option `outputprefix` (ASCEND assumes the extension is .out by default) (default: NO)
+- `haploid: NO` ASCEND assumes genotypes are diploid but if you set this option to YES it will interpret your genotypes as haploid (default: NO)
+- `dopseudodiploid: YES` set YES if your genotypes have to be pseudodiploidized (i.e. for heterozygous genotypes, one allele will be randomly picked and set in two copies) (default: NO)
+
+Related to SNP filtering
+
+- `maxpropsharingmissing: 1.0` maximum proportion of missing allele sharing items allowed, above this threshold the SNP will be discarded (default: 1.0)
+- `minmaf: 0` minimum Minor Allele Frequency that is allowed for a SNP to be taken into account, i.e. if a SNP has MAF<minMAF, it will be excluded (default: 0.0)
+
+Related to the decay curve parameters
+
+- `mindis: 0` minimum genetic distance in Morgans (default: 0.0 M)
+- `maxdis: 0.3` maximum genetic distance in Morgans (default: 0.3 M)
+- `binsize: 0.001` size of the genetic distance bin in Morgans (default: 0.001 M)
+- `morgans: YES` set NO if your input genetic distances are in centiMorgans (by default ASCEND assumes Morgans) (default: YES)
+
+Related to the algorithm
+
+- `usefft: YES` whether to use the Mesh + Fast Fourier Transforms (FFT) algorithm which speeds up the calculation by up to 8,000 times with only marginal approximations, note that if you have less than 10,000 SNPs per chromosome, we would advice using the naive algorithm i.e. setting `usefft: NO` (default: YES)
+- `qbins: 100` number of mesh points within each bins of the decay curve to consider for the mesh-FFT approximation (a higher number increases the mesh resolution and hence the accuracy of the decay curve) (default: 100)
+
+Related to the fitting
+
+- `onlyfit: NO` set YES if you want to do the estimation of the parameters directly, using files that have been already output by the script (default: NO)
+- `blocksizename: STRING` add this option to indicate the name of a file containing the per-chromosome weights to use for the weighted jackknife analysis; the file has two tab-separated columns: (i) the chromosome label (should be the same as in the .snp file) and (ii) the number of SNPs on the chromosome or the chromosome length in bp; if this option is not provided, ASCEND will automatically calculate the chromosome weights as the number of SNPs in the input .snp file.
 
 # Output
 
