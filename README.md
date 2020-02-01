@@ -3,7 +3,7 @@ ASCEND (Allele Sharing Correlation for the Estimation of Nonequilibrium Demograp
 
 # Installation
 
-ASCEND is a Python script and does not require prior installation apart specific modules (numpy, scipy) that you can install using the command:
+ASCEND is a Python3 script and does not require prior installation apart specific modules (numpy, scipy) that you can install using the command:
 
 `pip3 install numpy`
 
