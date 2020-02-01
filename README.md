@@ -35,7 +35,7 @@ Note that by default, ASCEND assumes that the genetic positions are in Morgans a
 
 For reliable estimation, use a minimum of 5 diploids in the target and outgroup populations.
 
-For best performance, we advise to use at most 20-30 individuals for the target and ~15 individuals for the outgroup population.
+For best performance, we advise to use ~15 individuals for the outgroup population.
 
 # Full list parameters
 
