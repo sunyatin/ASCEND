@@ -1,0 +1,9 @@
+genotypename: example.geno
+snpname: example.snp
+indivname: example.ind
+genooutfilename: example_OUTGROUP.geno
+snpoutfilename: example_OUTGROUP.snp
+indoutfilename: example_OUTGROUP.ind
+outgroupsize: 15
+targetpop: Pop1
+seed: 10
