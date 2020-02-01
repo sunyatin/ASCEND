@@ -46,7 +46,7 @@ Note that you can comment any line and option using "#" (the software will ignor
 - `genotypename: [STRING]` name of the input .geno file
 - `snpname: [STRING]` name of the input .snp file
 - `indivname: [STRING]` name of the input .ind file
-- `outputprefix: [STRING]` prefix of the output file, ASCEND will automatically append the appropriate extensions of the output files
+- `outputprefix: [STRING]` prefix of the output file, ASCEND will automatically append the appropriate extensions
 - `targetpop: [STRING]` name of the target population to analyze
 
 **Optional options** (if not provided, ASCEND will take the default values)
