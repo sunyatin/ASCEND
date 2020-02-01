@@ -1,5 +1,5 @@
 # ASCEND
-ASCEND (Allele Sharing Correlation for the Estimation of Nonequilibrium Demography) is a method to estimate the age and intensity of founder events (or bottlenecks) using population genotype data.
+ASCEND (Allele Sharing Correlation for the Estimation of Nonequilibrium Demography) is a method to estimate the age and intensity of founder events / bottlenecks using population genotype data and based only on a recombination map.
 
 # Installation
 
