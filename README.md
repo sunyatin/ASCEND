@@ -51,7 +51,7 @@ Note that you can comment any line and option using "#" (the software will ignor
 
 **Optional options** (if not provided, ASCEND will take the default values)
 
-- `outpop: [STRING]` name of the outgroup population (if not provided, ASCEND will not compute the cross-population correlation and will output NaN in the corresponding column)
+- `outpop: [STRING]` (**recommended**) add this option to correct the within-population allele sharing correlation by a cross-population correlation to remove background LD, you will need to provide the name of the outgroup population (see the section **Picking random samples as outgroups** to pick up random outgroup individuals) - if this option is not provided, ASCEND will not compute the cross-population correlation and will instead output `nan` in the corresponding columns
 
 *Related to genetic data*
 
