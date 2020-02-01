@@ -23,7 +23,7 @@ ASCEND requires that the input data is in EIGENSTRAT format (see https://reich.h
 
 You can convert your file into EIGENSTRAT using the CONVERTF program (see https://github.com/argriffing/eigensoft/tree/master/CONVERTF).
 
-Note that the .geno file must not be compressed/binary.
+Note that the .geno file must **not** be compressed/binary.
 
 # Command line
 
