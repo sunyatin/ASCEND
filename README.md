@@ -159,7 +159,7 @@ An example run is provided in the repository `example`. You can re-run it using 
 
 `python3 ASCEND.py -p example.par`
 
-The example provided is a simulation with 3 chromosomes of a founder event occurring 50 generations ago with intensity 10% so your estimates of Tf and If in the output plot should overlap with these numbers.
+The example provided is a simulation with 3 chromosomes of a founder event occurring 50 generations ago with intensity 10% (20% of the genotypes were also replaced with missing genotypes) so your estimates of Tf and If in the output plot should overlap with these numbers.
 
 ## Picking random samples as outgroups
 
