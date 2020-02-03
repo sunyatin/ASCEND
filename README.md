@@ -66,7 +66,7 @@ Note that you can comment any line and option using "#" (the software will ignor
 
 *Related to the decay curve parameters*
 
-- `mindis: 0` minimum genetic distance in Morgans (default: 0.0 M)
+- `mindis: 0.001` minimum genetic distance in Morgans (default: 0.001 M)
 - `maxdis: 0.3` maximum genetic distance in Morgans (default: 0.3 M)
 - `binsize: 0.001` size of the genetic distance bin in Morgans (default: 0.001 M)
 - `morgans: YES` set NO if your input genetic distances are in centiMorgans (by default ASCEND assumes Morgans) (default: YES)
