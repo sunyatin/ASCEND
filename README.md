@@ -55,7 +55,7 @@ Note that you can comment any line and option using "#" (the software will ignor
 
 *Related to genetic data*
 
-- `chrom: [INT]` add this option to restrict the analysis to a specific chromosome, specifying which chromosome to consider
+- `chrom: [comma-separated list of integers]` add this option with a comma-separated list of chromosome on which to restrict the analysis (for instance, `chrom: 1, 2, 3` to restrict the analysis to chromosomes 1, 2 and 3) - **Check if your dataset contains sexual chromosomes, in such case, we recommend to restrict the analyses only to the autosomes using this option**
 - `haploid: NO` ASCEND assumes genotypes are diploid but if you set this option to YES it will interpret your genotypes as haploid (default: NO)
 - `dopseudodiploid: YES` set YES if your genotypes have to be pseudodiploidized (i.e. for heterozygous genotypes, one allele will be randomly picked and set in two copies) (default: NO)
 
