@@ -209,7 +209,7 @@ To solve this problem, you will have to convert your input dataset to EIGENSTRAT
 This software is licensed for academic and non-profit use only.
 
 # Support
-Send queries to Remi Tournebize (remi dot tournebize at gmail dot com) or Priya Moorjani (moorjani at berkeley dot edu).
+Send queries to Rémi Tournebize (remi dot tournebize at gmail dot com) or Priya Moorjani (moorjani at berkeley dot edu).
 
 
 
