@@ -1,6 +1,8 @@
 # ASCEND
 ASCEND (Allele Sharing Correlation for the Estimation of Nonequilibrium Demography) is a method to estimate the age and intensity of founder events / bottlenecks using population genotype data and based only on a recombination map.
 
+**Current version:** 8.2
+
 # Installation
 
 ASCEND is a Python3 script and does not require prior installation apart specific modules (numpy, scipy) that you can install using the command:
@@ -75,6 +77,7 @@ Note that you can comment any line and option using "#" (the software will ignor
 
 - `usefft: YES` whether to use the Mesh + Fast Fourier Transforms (FFT) algorithm which speeds up the calculation by up to 8,000 times with only marginal approximations, note that if you have less than 10,000 SNPs per chromosome, we would advice using the naive algorithm instead (i.e. use `usefft: NO`) (default: YES)
 - `qbins: 100` number of mesh points within each bins of the decay curve to consider for the mesh-FFT approximation (a higher number increases the mesh resolution and hence the accuracy of the decay curve, but also slows down the computation - we found that 100 was a good compromise between speed and accuracy) (default: 100)
+- `randomhet: NO` by default, when two individuals are heterozygous at a site, we assume that they share only 1 allele (`randomhet: NO`) which is our way to handle phasing uncertainty; however if you set this option as `YES` then the number of alleles shared will be picked up randomly as either 0 (the reference allele is on different chromosomes between the two individuals) or 2 (the reference allele is on the same chromosome between the two individuals).
 
 *Related to the fitting*
 
