@@ -59,7 +59,7 @@ Note that you can comment any line and option using "#" (the software will ignor
 
 - `chrom: [comma-separated list of integers]` add this option with a comma-separated list of chromosomes on which to restrict the analysis (for instance, `chrom: 1, 2, 3` to restrict the analysis to chromosomes 1, 2 and 3) - **Check if your dataset contains sexual chromosomes, in such case, we recommend to restrict the analyses only to the autosomes using this option**
 - `haploid: NO` ASCEND assumes genotypes are diploid but if you set this option to YES it will interpret your genotypes as haploid (default: NO)
-- `dopseudodiploid: YES` set YES if your genotypes have to be pseudodiploidized (i.e. for heterozygous genotypes, one allele will be randomly picked and set in two copies) (default: NO)
+- `dopseudodiploid: YES` set YES if your genotypes have to be pseudodiploidized (i.e. for heterozygous genotypes, one allele will be randomly picked and set in two copies) (default: NO) **Note that even if the genotypes are *already* provided as pseudodiploid in the input geno file, you should still have to set *dopseudodiploid: YES* so that ASCEND computes the allele sharing in an unbiased way!** 
 
 *Related to SNP filtering*
 
