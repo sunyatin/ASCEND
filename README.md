@@ -1,7 +1,7 @@
 # ASCEND
-ASCEND (Allele Sharing Correlation for the Estimation of Nonequilibrium Demography) is a method to estimate the age and intensity of founder events / bottlenecks using population genotype data and based only on a recombination map.
+ASCEND (Allele Sharing Correlation for the Estimation of Nonequilibrium Demography) is a method to estimate the age and intensity of founder events/bottlenecks using population genotype data and a recombination map.
 
-**Current version:** 8.2
+**Current version:** 8.5
 
 # Installation
 
@@ -11,9 +11,9 @@ ASCEND is a Python3 script and does not require prior installation apart specifi
 
 # Requirements
 
-In its current implementation, ASCEND requires that your population is comprised of at least 5 samples.
+For optimal use, ASCEND requires that your population is comprised of at least 5 samples.
 
-Since ASCEND relies on the recombination map, make sure your SNPs have the most accurate genetic positions (see https://github.com/sunyatin/itara/blob/master/liftover.py to lift over).
+Since ASCEND relies on the recombination map, make sure your SNPs have the most accurate genetic positions (see https://github.com/sunyatin/itara/blob/master/liftover.py to lift positions over a recombination map).
 
 # Input
 
@@ -53,7 +53,9 @@ Note that you can comment any line and option using "#" (the software will ignor
 
 **Optional options** (if not provided, ASCEND will take the default values)
 
-- `outpop: [STRING]` (**recommended**) add this option to correct the within-population allele sharing correlation by a cross-population correlation to remove background LD, you will need to provide the name of the outgroup population (see the section **Picking random samples as outgroups** to pick up random outgroup individuals) - if this option is not provided, ASCEND will not compute the cross-population correlation and will instead output `nan` in the corresponding columns
+- `outpop: [STRING]` (**recommended**) add this option to correct the within-population allele sharing correlation by a cross-population correlation to remove background LD; you have two options: (1) write `outpop: RANDOM` and add the option `outpopsize: n` to pick `n` random individuals (random sampling without replacement) from the dataset that are not in your target population (recommended) or (2) the name of the specific outgroup population to use. If this option is not provided, ASCEND will not compute the cross-population correlation and will instead output `nan` in the corresponding column. Note that `outpop: RANDOM` will generate a file with extension `RandomOutpop.ind` where the individuals picked up to form the outgroup population are annotated with the population label "OUTGROUP".
+
+- `outpopsize: [INTEGER]` if you provided the option `outpop: RANDOM` then add this option with the size of the outgroup population to create randomly (recommended: 15)
 
 *Related to genetic data*
 
@@ -84,6 +86,10 @@ Note that you can comment any line and option using "#" (the software will ignor
 - `onlyfit: NO` set YES if you want to do the estimation of the parameters directly, using the `.out` and `.perchr.out` files that have been already output by the script (using `onlyfit: YES` can be dangerous, if you have any doubt, we would advice to rerun the all analysis) (default: NO)
 - `blocksizename: [STRING]` add this option to indicate the name of a file containing the per-chromosome weights to use for the weighted jackknife analysis; the file must have two tab-separated columns: (i) the chromosome label (should be the same as in the .snp file) and (ii) the number of SNPs on the chromosome or the chromosome length in bp; if this option is not provided, ASCEND will automatically calculate the weight of each chromosome as the number of SNPs in the input .snp file.
 
+*Misc*
+
+- `seed: None` seed for the random number generator (default: None)
+
 # Output
 
 Each call to ASCEND outputs a set of 8 files (or only 7 if the `blocksizename` option is provided) that we describe hereunder:
@@ -112,7 +118,7 @@ The `.out` file contains the average allele sharing correlation averaged over al
 
 Note that in case where you do not provide an outgroup population, the `cor.bg` and `cor.substracted` will have `nan` values.
 
-### `.perchrom.out`
+### `.perchrom.outs`
 
 The `.perchrom.out` file contains the allele sharing correlation for each chromosome:
 
@@ -156,45 +162,17 @@ The file contains the estimated exponential parameters for each jackknife run:
 - `c` the affine term
 - `blockweights` the weight of the chromosome that was removed from the jackknife run
 
+## `.RandomOutpop.ind`
+
+If you used the option `outpop: RANDOM`, ASCEND will generate a file with the extension `.RandomOutpop.ind`. This file is a copy of your input `.ind` file but  the individuals picked up at random to create the outgroup population are annotated as "OUTGROUP". All the other individuals not in the target population nor in the outgroup population are set with population label "Ignore".
+
 # Full example
 
 An example run is provided in the repository `example`. You can re-run it using the command:
 
-`python3 ASCEND.py -p example.par`
+`python3 ASCEND.py -p founder_event_50gBP_intensity10percent.par`
 
 The example provided is a simulation with 3 chromosomes of a founder event occurring 50 generations ago with intensity 10% (20% of the genotypes were also replaced with missing genotypes) so your estimates of Tf and If in the output plot should overlap with these numbers.
-
-## Picking random samples as outgroups
-
-If you want to pick `n` random samples (random sampling without replacement) as an outgroup population from your original dataset, first run the following script:
-
-`python3 pickoutgroups.py -p [NameOfTheParameterFile].par`
-
-The parameter file takes 8 arguments and 1 optional (`seed`):
-
-- `genotypename: [STRING]` the input .geno file
-- `snpname: [STRING]` the input .snp file
-- `indivname: [STRING]` the input .ind file
-- `genooutfilename: [STRING]` the output .geno file
-- `snpoutfilename: [STRING]` the output .snp file
-- `indoutfilename: [STRING]` the output .ind file
-- `outgroupsize: [INT]` number of outgroup individuals to sample (we recommand a size of 15 individuals)
-- `targetpop: [STRING]` the label of the target population
-- `seed: [INT]` a seed for the random sampling of outgroup individuals (if this option is not provided, will use the current timestamp as a seed)
-
-The script will basically output the genotype matrix for the target samples along with `outgroupsize` random individuals that have been set with the population label `OUTGROUP`.
-
-Note that if you use ASCEND after `pickoutgroups.py`, make sure that the option `outpop` in ASCEND is set as:
-
-  `outpop: OUTGROUP`
-
-### Full usage example
-
-Example of a full run using this outgroup strategy:
-
-`python3 pickoutgroups.py -p outgroup.par`
-
-`python3 ASCEND.py -p example_OUTGROUP.par`
 
 # Troubleshooting
 
