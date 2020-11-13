@@ -1,7 +1,7 @@
 # ASCEND
 ASCEND (Allele Sharing Correlation for the Estimation of Nonequilibrium Demography) is a method to estimate the age and intensity of founder events/bottlenecks using population genotype data and a recombination map.
 
-**Current version:** 8.5
+**Current version:** 8.6
 
 # Installation
 
@@ -11,7 +11,7 @@ ASCEND is a Python3 script and does not require prior installation apart specifi
 
 # Requirements
 
-For optimal use, ASCEND requires that your population is comprised of at least 5 samples.
+For optimal use, ASCEND requires that your population is comprised of at least 5 samples. ASCEND is based on EIGENSTRAT-formatted input files and **requires genetic positions**, provided in the 3rd column of the .snp file (genetic positions can be given either in Morgans or centiMorgans).
 
 Since ASCEND relies on the recombination map, make sure your SNPs have the most accurate genetic positions (see https://github.com/sunyatin/itara/blob/master/liftover.py to lift positions over a recombination map).
 
@@ -20,7 +20,7 @@ Since ASCEND relies on the recombination map, make sure your SNPs have the most 
 ASCEND requires that the input data is in EIGENSTRAT format (see https://reich.hms.harvard.edu/software/InputFileFormats). The EIGENSTRAT format is comprised of three files:
 
 - `*.ind` A 3-column file with each individual on one row, and columns are (1) individual name, (2) individual sex (note that sex is not used for the ASCEND analysis), (3) population label
-- `*.snp` A 6-column file with each SNP on one row, and columns are (1) SNP name, (2) chromosome, (3) genetic position (in Morgans or centiMorgans), (4) physical position (in base pairs), 5th and 6th columns are the ancestral/derived or reference/alternate alleles but these 2 columns are not taken into account for the ASCEND analysis
+- `*.snp` A 6-column file with each SNP on one row, and columns are (1) SNP name, (2) chromosome, (3) **genetic position (in Morgans or centiMorgans)**, (4) physical position (in base pairs), 5th and 6th columns are the ancestral/derived or reference/alternate alleles but these 2 columns are not taken into account for the ASCEND analysis
 - `*.geno` The genotype matrix with no delimiter between genotypes, each row is one SNP and each column is one individual, genotypes are encoded as 0 (= 1/1), 1 (=0/1) or 0 (=0/0). Missing genotypes are encoded as 9.
 
 You can convert your file into EIGENSTRAT using the CONVERTF program (see https://github.com/argriffing/eigensoft/tree/master/CONVERTF).
@@ -92,7 +92,7 @@ Note that you can comment any line and option using "#" (the software will ignor
 
 # Output
 
-Each call to ASCEND outputs a set of 8 files (or only 7 if the `blocksizename` option is provided) that we describe hereunder:
+Each call to ASCEND outputs a set of 9 files (or only 7 if the `blocksizename` option is provided) that we describe hereunder:
 
 ### `.log`
 
@@ -100,7 +100,11 @@ The log file.
 
 ### `.png`
 
-This script will output a plot of the allele sharing correlation decay curve (blue points) along with the fitted exponential model (red line). In the top-right corner: the estimates of founder age (Tf) and intensity (If) with their associated 95% confidence intervals within brackets as well as the NRMSD.
+ThA plot of the allele sharing correlation decay curve (blue points) along with the fitted exponential model (red line). In the top-right corner: the estimates of founder age (Tf) and intensity (If) with their associated 95% confidence intervals within brackets as well as the NRMSD.
+
+### `.est`
+
+A table containing, on each line: the estimate of the founder age (Tf, in generations before sampling) with standard error (SE), lower and upper boundaries of the confidence interval at 95%; intensity (If) with its SE and CI95 boundaries; the NRMSD.
 
 ### `.qweights`
 
@@ -173,6 +177,31 @@ An example run is provided in the repository `example`. You can re-run it using 
 `python3 ASCEND.py -p founder_event_50gBP_intensity10percent.par`
 
 The example provided is a simulation with 3 chromosomes of a founder event occurring 50 generations ago with intensity 10% (20% of the genotypes were also replaced with missing genotypes) so your estimates of Tf and If in the output plot should overlap with these numbers.
+
+# Typical parameter file for an aDNA analysis
+
+If you want to analyze ancient DNA, we advise not subtracting background LD (by quoting `outpop:`) and pseudodiploidizing the genotypes (`dopseudodiploid: YES`). A typical parameter file would therefore look like:
+
+```
+genotypename: FILE.geno
+snpname: FILE.snp
+indivname: FILE.ind
+targetpop: TARGET_POPULATION
+#outpop: 
+outputprefix: results/OUTPUT
+binsize: 0.001
+mindis: 0.001
+maxdis: 0.3
+maxpropsharingmissing: 1
+minmaf: 0
+chrom: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22
+haploid: NO
+dopseudodiploid: YES
+morgans: CHECK_THIS_ON_YOUR_INPUT_FILE
+onlyfit: NO
+usefft: YES
+qbins: 100
+```
 
 # Troubleshooting
 
