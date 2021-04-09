@@ -17,7 +17,7 @@ ASCEND is a Python3 script and does not require prior installation apart specifi
 
 # Requirements
 
-For optimal use, ASCEND requires that your population is comprised of at least 5 samples. ASCEND is based on EIGENSTRAT-formatted input files and **requires genetic positions**, provided in the 3rd column of the .snp file (genetic positions can be given either in Morgans or centiMorgans).
+For optimal use, ASCEND requires that your population is comprised of at least 5 samples. ASCEND is based on EIGENSTRAT-formatted input files and **requires genetic positions**, provided in the 3rd column of the .snp file (genetic positions can be given either in Morgans or centiMorgans). The method currently does not support packed formats like packedancestrymap, packedped, packedeigenstrat, etc. Please use `convertf` to convert the data to eigenstrat format before use.
 
 Since ASCEND relies on the recombination map, make sure your SNPs have the most accurate genetic positions (see https://github.com/sunyatin/itara/blob/master/liftover.py to lift positions over a recombination map).
 
