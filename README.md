@@ -1,7 +1,7 @@
 # ASCEND
 ASCEND (Allele Sharing Correlation for the Estimation of Nonequilibrium Demography) is a method to estimate the age and intensity of founder events/bottlenecks using population genotype data and a recombination map.
 
-**Current version:** 8.6
+**Current version:** 10.0
 
 # Installation
 
@@ -27,11 +27,11 @@ ASCEND requires that the input data is in EIGENSTRAT format (see https://reich.h
 
 - `*.ind` A 3-column file with each individual on one row, and columns are (1) individual name, (2) individual sex (note that sex is not used for the ASCEND analysis), (3) population label
 - `*.snp` A 6-column file with each SNP on one row, and columns are (1) SNP name, (2) chromosome, (3) **genetic position (in Morgans or centiMorgans)**, (4) physical position (in base pairs), 5th and 6th columns are the ancestral/derived or reference/alternate alleles but these 2 columns are not taken into account for the ASCEND analysis
-- `*.geno` The genotype matrix with no delimiter between genotypes, each row is one SNP and each column is one individual, genotypes are encoded as 0 (= 1/1), 1 (=0/1) or 0 (=0/0). Missing genotypes are encoded as 9.
+- `*.geno` The genotype matrix with no delimiter between genotypes, each row is one SNP and each column is one individual, genotypes are encoded as 0 (= 1/1), 1 (=0/1) or 2 (=0/0). Missing genotypes are encoded as 9.
 
 You can convert your file into EIGENSTRAT using the CONVERTF program (see https://github.com/argriffing/eigensoft/tree/master/CONVERTF).
 
-Note that the .geno file must **not** be compressed/binary.
+Note that the .geno file must **not** be binary, but it can be gzip-compressed.
 
 # Command line
 
@@ -39,7 +39,7 @@ To run an ASCEND analysis:
 
 `python3 ASCEND.py -p [NameOfTheParameterFile].par`
 
-Note that by default, ASCEND assumes that the genetic positions are in Morgans and that the samples are diploid.
+Note that by default, ASCEND assumes that the **genetic positions are in Morgans** and that the **samples are diploid**.
 
 For reliable estimation, use a minimum of 5 diploids in the target and outgroup populations.
 
@@ -67,7 +67,7 @@ Note that you can comment any line and option using "#" (the software will ignor
 
 - `chrom: [comma-separated list of integers]` add this option with a comma-separated list of chromosomes on which to restrict the analysis (for instance, `chrom: 1, 2, 3` to restrict the analysis to chromosomes 1, 2 and 3) - **Check if your dataset contains sexual chromosomes, in such case, we recommend to restrict the analyses only to the autosomes using this option**
 - `haploid: NO` ASCEND assumes genotypes are diploid but if you set this option to YES it will interpret your genotypes as haploid (default: NO)
-- `dopseudodiploid: YES` set YES if your genotypes have to be pseudodiploidized (i.e. for heterozygous genotypes, one allele will be randomly picked and set in two copies) (default: NO) **Note that even if the genotypes are *already* provided as pseudodiploid in the input geno file, you should still have to set *dopseudodiploid: YES* so that ASCEND computes the allele sharing in an unbiased way!** 
+- `dopseudohaploid: YES` set YES if your genotypes have to be pseudohaploidized (i.e. for heterozygous genotypes, one allele will be randomly picked and set in two copies) (default: NO) **Note that even if the genotypes are *already* provided as pseudohaploid in the input geno file, you should still have to set *dopseudohaploid: YES* so that ASCEND computes the allele sharing in an unbiased way!** 
 
 *Related to SNP filtering*
 
@@ -86,6 +86,7 @@ Note that you can comment any line and option using "#" (the software will ignor
 - `usefft: YES` whether to use the Mesh + Fast Fourier Transforms (FFT) algorithm which speeds up the calculation by up to 8,000 times with only marginal approximations, note that if you have less than 10,000 SNPs per chromosome, we would advice using the naive algorithm instead (i.e. use `usefft: NO`) (default: YES)
 - `qbins: 100` number of mesh points within each bins of the decay curve to consider for the mesh-FFT approximation (a higher number increases the mesh resolution and hence the accuracy of the decay curve, but also slows down the computation - we found that 100 was a good compromise between speed and accuracy) (default: 100)
 - `randomhet: NO` by default, when two individuals are heterozygous at a site, we assume that they share only 1 allele (`randomhet: NO`) which is our way to handle phasing uncertainty; however if you set this option as `YES` then the number of alleles shared will be picked up randomly as either 0 (the reference allele is on different chromosomes between the two individuals) or 2 (the reference allele is on the same chromosome between the two individuals).
+- `calculation_mode: auto` by default, ASCEND will automatically detect the format of your genotypes based on the `haploid` and `dopseudodiploid` options you provided, and run the (i) **allele sharing correlation** function for **diploid** or **haploid** data or (ii) run the **allele sharing weighted covariance** function for **pseudohaploid** data. This is to ensure that no bias is introduced when estimating the amplitude of the decay curve. Although we do not advise to do so, you can still force the use of a specific function using the values `correlation` or `weighted_covariance`, respectively. An error message will pop up if the nature of the input genotypes do not match the function you provided.
 
 *Related to the fitting*
 
@@ -186,7 +187,7 @@ The example provided is a simulation with 3 chromosomes of a founder event occur
 
 # Typical parameter file for an aDNA analysis
 
-If you want to analyze ancient DNA, we advise not subtracting background LD (by quoting `outpop:`) and pseudodiploidizing the genotypes (`dopseudodiploid: YES`). A typical parameter file would therefore look like:
+If you want to analyze ancient DNA, we advise not subtracting background LD (by masking `outpop:` with a "#" symbol) and pseudohaploidizing the genotypes (`dopseudohaploid: YES`). A typical parameter file would therefore look like:
 
 ```
 genotypename: FILE.geno
@@ -202,7 +203,7 @@ maxpropsharingmissing: 1
 minmaf: 0
 chrom: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22
 haploid: NO
-dopseudodiploid: YES
+dopseudohaploid: YES
 morgans: CHECK_THIS_ON_YOUR_INPUT_FILE
 onlyfit: NO
 usefft: YES
