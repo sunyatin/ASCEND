@@ -65,9 +65,9 @@ Note that you can comment any line and option using "#" (the software will ignor
 
 *Related to genetic data*
 
-- `chrom: [comma-separated list of integers]` add this option with a comma-separated list of chromosomes on which to restrict the analysis (for instance, `chrom: 1, 2, 3` to restrict the analysis to chromosomes 1, 2 and 3) - **Check if your dataset contains sexual chromosomes, in such case, we recommend to restrict the analyses only to the autosomes using this option**
+- `chrom: [comma-separated list of integers]` add this option with a comma-separated list of chromosomes on which to restrict the analysis (for instance, `chrom: 1, 2, 3` to restrict the analysis to chromosomes 1, 2 and 3). **Check if your dataset contains sexual chromosomes, in such case, we recommend to restrict the analyses only to the autosomes using this option**
 - `haploid: NO` ASCEND assumes genotypes are diploid but if you set this option to YES it will interpret your genotypes as haploid (default: NO)
-- `dopseudohaploid: YES` set YES if your genotypes have to be pseudohaploidized (i.e. for heterozygous genotypes, one allele will be randomly picked and set in two copies) (default: NO) **Note that even if the genotypes are *already* provided as pseudohaploid in the input geno file, you should still have to set *dopseudohaploid: YES* so that ASCEND computes the allele sharing in an unbiased way!** 
+- `dopseudohaploid: YES` set YES if your genotypes have to be pseudohaploidized (i.e. for heterozygous genotypes, one allele will be randomly picked and set in two copies) (default: NO). Note that even if the genotypes are *already* provided as pseudohaploid in the input .geno file, you still must set `dopseudohaploid: YES` so that ASCEND computes the allele sharing in an unbiased way.
 
 *Related to SNP filtering*
 
@@ -83,7 +83,7 @@ Note that you can comment any line and option using "#" (the software will ignor
 
 *Related to the algorithm*
 
-- `usefft: YES` whether to use the Mesh + Fast Fourier Transforms (FFT) algorithm which speeds up the calculation by up to 8,000 times with only marginal approximations, note that if you have less than 10,000 SNPs per chromosome, we would advice using the naive algorithm instead (i.e. use `usefft: NO`) (default: YES)
+- `usefft: YES` whether to use the Mesh + Fast Fourier Transforms (FFT) algorithm which speeds up the calculation by up to 8,000 times with only marginal approximations. In general, we advise to use the FFT instead of the Naïve implementation for reasons of speed and accuracy, especially in case of high rates of missing genotypes (FFT handles missingness better than the Naïve implementation).
 - `qbins: 100` number of mesh points within each bins of the decay curve to consider for the mesh-FFT approximation (a higher number increases the mesh resolution and hence the accuracy of the decay curve, but also slows down the computation - we found that 100 was a good compromise between speed and accuracy) (default: 100)
 - `randomhet: NO` by default, when two individuals are heterozygous at a site, we assume that they share only 1 allele (`randomhet: NO`) which is our way to handle phasing uncertainty; however if you set this option as `YES` then the number of alleles shared will be picked up randomly as either 0 (the reference allele is on different chromosomes between the two individuals) or 2 (the reference allele is on the same chromosome between the two individuals).
 - `calculation_mode: auto` by default, ASCEND will automatically detect the format of your genotypes based on the `haploid` and `dopseudodiploid` options you provided, and run the (i) **allele sharing correlation** function for **diploid** or **haploid** data or (ii) run the **allele sharing weighted covariance** function for **pseudohaploid** data. This is to ensure that no bias is introduced when estimating the amplitude of the decay curve. Although we do not advise to do so, you can still force the use of a specific function using the values `correlation` or `weighted_covariance`, respectively. An error message will pop up if the nature of the input genotypes do not match the function you provided.
