@@ -66,8 +66,8 @@ Note that you can comment any line and option using "#" (the software will ignor
 *Related to genetic data*
 
 - `chrom: [comma-separated list of integers]` add this option with a comma-separated list of chromosomes on which to restrict the analysis (for instance, `chrom: 1, 2, 3` to restrict the analysis to chromosomes 1, 2 and 3). **Check if your dataset contains sexual chromosomes, in such case, we recommend to restrict the analyses only to the autosomes using this option**
-- `haploid: NO` ASCEND assumes genotypes are diploid but if you set this option to YES it will interpret your genotypes as haploid (default: NO)
-- `dopseudohaploid: YES` set YES if your genotypes have to be pseudohaploidized (i.e. for heterozygous genotypes, one allele will be randomly picked and set in two copies) (default: NO). Note that even if the genotypes are *already* provided as pseudohaploid in the input .geno file, you still must set `dopseudohaploid: YES` so that ASCEND computes the allele sharing in an unbiased way.
+- `haploid: YES/NO` ASCEND assumes genotypes are diploid but if you set this option to YES it will interpret your genotypes as haploid (default: NO)
+- `dopseudohaploid: YES/NO` set YES if your genotypes have to be pseudohaploidized (i.e. for heterozygous genotypes, one allele will be randomly picked and set in two copies) (default: NO). Note that even if the genotypes are *already* provided as pseudohaploid in the input .geno file, you still must set `dopseudohaploid: YES` so that ASCEND computes the allele sharing in an unbiased way.
 
 *Related to SNP filtering*
 
@@ -79,23 +79,23 @@ Note that you can comment any line and option using "#" (the software will ignor
 - `mindis: 0.001` minimum genetic distance in Morgans (default: 0.001 M)
 - `maxdis: 0.3` maximum genetic distance in Morgans (default: 0.3 M)
 - `binsize: 0.001` size of the genetic distance bin in Morgans (default: 0.001 M)
-- `morgans: YES` set NO if your input genetic distances are in centiMorgans (by default ASCEND assumes Morgans) (default: YES)
+- `morgans: YES/NO` set NO if your input genetic distances are in centiMorgans (by default ASCEND assumes Morgans) (default: YES)
 
 *Related to the algorithm*
 
-- `usefft: YES` whether to use the Mesh + Fast Fourier Transforms (FFT) algorithm which speeds up the calculation by up to 8,000 times with only marginal approximations. In general, we advise to use the FFT instead of the Naïve implementation for reasons of speed and accuracy, especially in case of high rates of missing genotypes (FFT handles missingness better than the Naïve implementation).
+- `usefft: YES/NO` whether to use the Mesh + Fast Fourier Transforms (FFT) algorithm which speeds up the calculation by up to 8,000 times with only marginal approximations. In general, we advise to use the FFT instead of the Naïve implementation for reasons of speed and accuracy, especially in case of high rates of missing genotypes (FFT handles missingness better than the Naïve implementation).
 - `qbins: 100` number of mesh points within each bins of the decay curve to consider for the mesh-FFT approximation (a higher number increases the mesh resolution and hence the accuracy of the decay curve, but also slows down the computation - we found that 100 was a good compromise between speed and accuracy) (default: 100)
-- `randomhet: NO` by default, when two individuals are heterozygous at a site, we assume that they share only 1 allele (`randomhet: NO`) which is our way to handle phasing uncertainty; however if you set this option as `YES` then the number of alleles shared will be picked up randomly as either 0 (the reference allele is on different chromosomes between the two individuals) or 2 (the reference allele is on the same chromosome between the two individuals).
-- `calculation_mode: auto` by default, ASCEND will automatically detect the format of your genotypes based on the `haploid` and `dopseudodiploid` options you provided, and run the (i) **allele sharing correlation** function for **diploid** or **haploid** data or (ii) run the **allele sharing weighted covariance** function for **pseudohaploid** data. This is to ensure that no bias is introduced when estimating the amplitude of the decay curve. Although we do not advise to do so, you can still force the use of a specific function using the values `correlation` or `weighted_covariance`, respectively. An error message will pop up if the nature of the input genotypes do not match the function you provided.
+- `randomhet: YES/NO` by default, when two individuals are heterozygous at a site, we assume that they share only 1 allele (`randomhet: NO`) which is our way to handle phasing uncertainty; however if you set this option as `YES` then the number of alleles shared will be picked up randomly as either 0 (the reference allele is on different chromosomes between the two individuals) or 2 (the reference allele is on the same chromosome between the two individuals).
+- `calculation_mode: auto/correlation/weighted_covariance` by default, ASCEND will automatically detect the format of your genotypes based on the `haploid` and `dopseudodiploid` options you provided, and run the (i) **allele sharing correlation** function for **diploid** or **haploid** data or (ii) run the **allele sharing weighted covariance** function for **pseudohaploid** data. This is to ensure that no bias is introduced when estimating the amplitude of the decay curve. Although we do not advise to do so, you can still force the use of a specific function using the values `correlation` or `weighted_covariance`, respectively. An error message will pop up if the nature of the input genotypes do not match the function you provided.
 
 *Related to the fitting*
 
-- `onlyfit: NO` set YES if you want to do the estimation of the parameters directly, using the `.out` and `.perchr.out` files that have been already output by the script (using `onlyfit: YES` can be dangerous, if you have any doubt, we would advice to rerun the all analysis) (default: NO)
-- `blocksizename: [STRING]` add this option to indicate the name of a file containing the per-chromosome weights to use for the weighted jackknife analysis; the file must have two tab-separated columns: (i) the chromosome label (should be the same as in the .snp file) and (ii) the number of SNPs on the chromosome or the chromosome length in bp; if this option is not provided, ASCEND will automatically calculate the weight of each chromosome as the number of SNPs in the input .snp file.
+- `onlyfit: YES/NO` set YES if you want to do the estimation of the parameters directly, using the `.out` and `.perchr.out` files that have been already output by the script (using `onlyfit: YES` can be dangerous, if you have any doubt, we would advice to rerun the all analysis) (default: NO)
+- `blocksizename: [file path]` add this option to indicate the name of a file containing the per-chromosome weights to use for the weighted jackknife analysis; the file must have two tab-separated columns: (i) the chromosome label (should be the same as in the .snp file) and (ii) the number of SNPs on the chromosome or the chromosome length in bp; if this option is not provided, ASCEND will automatically calculate the weight of each chromosome as the number of SNPs in the input .snp file.
 
 *Misc*
 
-- `seed: None` seed for the random number generator (default: None)
+- `seed: None` seed for the random number generator, if None, will generate a random seed (default: None)
 
 # Output
 
