@@ -1,7 +1,7 @@
 # ASCEND
 ***ASCEND*** (**A**llele **S**haring **C**orrelation for the **E**stimation of **N**onequilibrium **D**emography) is a method to estimate the age and intensity of founder events/bottlenecks using population genotype data and a recombination map.
 
-**Current version:** 10.0
+:arrow_right: **Current version:** 10.0
 
 # :v: Tutorial
 
@@ -30,7 +30,9 @@ Since ASCEND relies on the recombination map, make sure your SNPs have the most 
 
 # :dna: Input
 
-ASCEND requires that the input data is in EIGENSTRAT format (see https://reich.hms.harvard.edu/software/InputFileFormats). The EIGENSTRAT format is comprised of three files:
+ASCEND requires that the input data is in EIGENSTRAT format (see https://reich.hms.harvard.edu/software/InputFileFormats). **Currently ASCEND does not accept _binary_ EIGENSTRAT files** (we plan to handle this format soon). If you have binary EIGENSTRAT file, please convert them to non-binary format using CONVERTF.
+
+The EIGENSTRAT format is comprised of three files:
 
 - `*.ind` A 3-column file with each individual on one row, and columns are (1) individual name, (2) individual sex (note that sex is not used for the ASCEND analysis), (3) population label
 - `*.snp` A 6-column file with each SNP on one row, and columns are (1) SNP name, (2) chromosome, (3) **genetic position (in Morgans or centiMorgans)**, (4) physical position (in base pairs), 5th and 6th columns are the ancestral/derived or reference/alternate alleles but these 2 columns are not taken into account for the ASCEND analysis
