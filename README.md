@@ -52,7 +52,7 @@ For reliable estimation, use a minimum of 5 diploids in the target and outgroup 
 
 For best performance, we advise to use ~15 individuals for the outgroup population.
 
-# :high_brightness: Full list parameters
+# :feet: Full list parameters
 
 Note that you can comment any line and option using "#" (the software will ignore those lines). Also, the options can be written in any order.
 
@@ -225,9 +225,9 @@ If your input are in PACKED EIGENSTRAT format (i.e. the .geno file is binary), A
 
 To solve this problem, you will have to convert your input dataset to EIGENSTRAT using `convertf`, cf. https://github.com/DReichLab/AdmixTools/tree/master/convertf
 
-# License
+# :copyright: License
 
 This software is licensed for academic and non-profit use only.
 
-# Support
+# :space_invader: Support
 Send queries to Rémi Tournebize (remi dot tournebize at gmail dot com) or Priya Moorjani (moorjani at berkeley dot edu).
