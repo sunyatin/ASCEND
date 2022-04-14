@@ -30,7 +30,7 @@ Since ASCEND relies on the recombination map, make sure your SNPs have the most 
 
 # :dna: Input
 
-ASCEND requires that the input data is in EIGENSTRAT format (see https://reich.hms.harvard.edu/software/InputFileFormats). **Currently ASCEND does not accept _binary_ EIGENSTRAT files** (we plan to handle this format soon). If you have binary EIGENSTRAT file, please convert them to non-binary format using CONVERTF.
+ASCEND requires that the input data is in EIGENSTRAT format (see https://reich.hms.harvard.edu/software/InputFileFormats). **Currently ASCEND does not accept _binary_ or _packed_ EIGENSTRAT files (e.g. packedeigenstrat)** (we plan to handle this format soon). *If you have binary EIGENSTRAT file, please convert them to non-binary format using CONVERTF.*
 
 The EIGENSTRAT format is comprised of three files:
 
