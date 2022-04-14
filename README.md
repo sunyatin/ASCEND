@@ -3,25 +3,32 @@ ASCEND (Allele Sharing Correlation for the Estimation of Nonequilibrium Demograp
 
 **Current version:** 10.0
 
-# Installation
+# :v: Tutorial
+
+A series of examples/tutorials is present in the `docs` directory:
+
+- for inferring founder events for present-day samples of a diploid species, click [here](https://github.com/sunyatin/ASCEND/blob/master/docs/present_DNA.pdf).
+- for inferring founder events for ancient samples of a diploid species, considering only the 5 five chromosomes, click [here](https://github.com/sunyatin/ASCEND/blob/master/docs/ancient_DNA.pdf).
+
+# :point_down: Installation
 
 ASCEND is a Python3 script and does not require prior installation apart specific modules (numpy, scipy) that you can install using the command:
 
 `pip3 install --user numpy`
 
-`pip3 install --user pandas` 
+`pip3 install --user pandas`
 
 `pip3 install --user matplotlib`
 
 `pip3 install --user scipy`
 
-# Requirements
+# :heavy_exclamation_mark: Requirements
 
 For optimal use, ASCEND requires that your population is comprised of at least 5 samples. ASCEND is based on EIGENSTRAT-formatted input files and **requires genetic positions**, provided in the 3rd column of the .snp file (genetic positions can be given either in Morgans or centiMorgans). The method currently does not support packed formats like packedancestrymap, packedped, packedeigenstrat, etc. Please use `convertf` to convert the data to eigenstrat format before use.
 
 Since ASCEND relies on the recombination map, make sure your SNPs have the most accurate genetic positions (see https://github.com/sunyatin/itara/blob/master/liftover.py to lift positions over a recombination map).
 
-# Input
+# :dna: Input
 
 ASCEND requires that the input data is in EIGENSTRAT format (see https://reich.hms.harvard.edu/software/InputFileFormats). The EIGENSTRAT format is comprised of three files:
 
@@ -33,7 +40,7 @@ You can convert your file into EIGENSTRAT using the CONVERTF program (see https:
 
 Note that the .geno file must **not** be binary, but it can be gzip-compressed.
 
-# Command line
+# :computer: Command line
 
 To run an ASCEND analysis:
 
@@ -45,7 +52,7 @@ For reliable estimation, use a minimum of 5 diploids in the target and outgroup 
 
 For best performance, we advise to use ~15 individuals for the outgroup population.
 
-# Full list parameters
+# :high_brightness: Full list parameters
 
 Note that you can comment any line and option using "#" (the software will ignore those lines). Also, the options can be written in any order.
 
@@ -97,7 +104,7 @@ Note that you can comment any line and option using "#" (the software will ignor
 
 - `seed: None` seed for the random number generator, if None, will generate a random seed (default: None)
 
-# Output
+# :tada: Output
 
 Each call to ASCEND outputs a set of 9 files (or only 7 if the `blocksizename` option is provided) that we describe hereunder:
 
@@ -153,7 +160,7 @@ The `.perjk.outs` file contains the average allele sharing correlation values ca
 
 ### `.fit`
 
-The `.fit` file provides the estimates of the exponential model (that you can then use to estimate the founder age and the founder intensity) with their associated standard errors. To compute standard errors, the script performs a weighted block jackknife where blocks are the chromosomes and weights are their sizes or their number of SNPs. We fit an exponential function of the form `z(d) = A exp(-2dt) + c` where `z(d)` is the average allele sharing correlation at the genetic distance bin `d`, `A` is the amplitude and `t` is the rate of exponential decay. 
+The `.fit` file provides the estimates of the exponential model (that you can then use to estimate the founder age and the founder intensity) with their associated standard errors. To compute standard errors, the script performs a weighted block jackknife where blocks are the chromosomes and weights are their sizes or their number of SNPs. We fit an exponential function of the form `z(d) = A exp(-2dt) + c` where `z(d)` is the average allele sharing correlation at the genetic distance bin `d`, `A` is the amplitude and `t` is the rate of exponential decay.
 
 The `.fit` file has 4 columns:
 - `param` the name of the parameter
@@ -177,7 +184,7 @@ The file contains the estimated exponential parameters for each jackknife run:
 
 If you used the option `outpop: RANDOM`, ASCEND will generate a file with the extension `.RandomOutpop.ind`. This file is a copy of your input `.ind` file but  the individuals picked up at random to create the outgroup population are annotated as "OUTGROUP". All the other individuals not in the target population nor in the outgroup population are set with population label "Ignore".
 
-# Full example
+# :bulb: Full example
 
 An example run is provided in the repository `example`. You can re-run it using the command:
 
@@ -185,7 +192,7 @@ An example run is provided in the repository `example`. You can re-run it using 
 
 The example provided is a simulation with 3 chromosomes of a founder event occurring 50 generations ago with intensity 10% (20% of the genotypes were also replaced with missing genotypes) so your estimates of Tf and If in the output plot should overlap with these numbers.
 
-# Typical parameter file for an aDNA analysis
+# :skull: Typical parameter file for an aDNA analysis
 
 If you want to analyze ancient DNA, we advise not subtracting background LD (by masking `outpop:` with a "#" symbol) and pseudohaploidizing the genotypes (`dopseudohaploid: YES`). A typical parameter file would therefore look like:
 
@@ -194,7 +201,7 @@ genotypename: FILE.geno
 snpname: FILE.snp
 indivname: FILE.ind
 targetpop: TARGET_POPULATION
-#outpop: 
+#outpop:
 outputprefix: results/OUTPUT
 binsize: 0.001
 mindis: 0.001
@@ -210,7 +217,7 @@ usefft: YES
 qbins: 100
 ```
 
-# Troubleshooting
+# :bug: Troubleshooting
 
 ### UnicodeDecodeError
 If your input are in PACKED EIGENSTRAT format (i.e. the .geno file is binary), ASCEND will throw the error
@@ -224,6 +231,3 @@ This software is licensed for academic and non-profit use only.
 
 # Support
 Send queries to Rémi Tournebize (remi dot tournebize at gmail dot com) or Priya Moorjani (moorjani at berkeley dot edu).
-
-
-
