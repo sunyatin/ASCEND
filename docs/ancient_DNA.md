@@ -1,6 +1,6 @@
 # Founder event characterization for ancient samples of a diploid species, considering only the 5 five chromosomes
 
-In this example, we are using data simulated under a simple population model where a target population (*Pop1*) with effective size N<sub>o</sub>=12,500 experienced a founder event 50 generations before present (gBP) with intensity 10%. This population diverged from another one (*OUTGROUP*) 1,800 generations ago. We will consider that the samples are from ancient DNA and thus have to be pseudo-haploidized (i.e. only one read at the SNP position was sampled for the individual and set as homozygous).
+In this example, we are using data simulated under a simple population model where a target population (*Pop1*) with effective size N<sub>o</sub>=12,500 experienced a founder event 50 generations **before sampling (gBS)** with intensity 10%. This population diverged from another one (*OUTGROUP*) 1,800 generations ago. We will consider that the samples are from ancient DNA and thus have to be pseudo-haploidized (i.e. only one read at the SNP position was sampled for the individual and set as homozygous).
 
 ## Data
 
@@ -171,7 +171,7 @@ python3 ASCEND.py -p test.par
 Running *ASCEND* will generate all output files in the *results/* directory, with prefix *test.**. The files of major interest are:
 
 - *test.png*
-This is a visual representation of the allele sharing decay curve. The blue points are the empirical values of the allele sharing correlation at each bin of genetic position (in cM). The red line is the single-factor exponential fit. Carefully check that the curve has decayed to 0, otherwise consider increasing `maxdis`. In the top-right corner, we report the estimated founder age (*T<sub>f</sub>*) in generations before present, with the confidence interval at 95%; as well as the estimated founder intensity (*I<sub>f</sub>*), reported in percents; and the NRMSD which is a measure of noisiness of the decay curve and a measure of fit quality. **The table of numerical values to re-plot the decay curve elsewhere can be found in *test.out* .**
+This is a visual representation of the allele sharing decay curve. The blue points are the empirical values of the allele sharing correlation at each bin of genetic position (in cM). The red line is the single-factor exponential fit. Carefully check that the curve has decayed to 0, otherwise consider increasing `maxdis`. In the top-right corner, we report the estimated founder age (*T<sub>f</sub>*) in generations **before sampling**, with the confidence interval at 95%; as well as the estimated founder intensity (*I<sub>f</sub>*), reported in percents; and the NRMSD which is a measure of noisiness of the decay curve and a measure of fit quality. **The table of numerical values to re-plot the decay curve elsewhere can be found in *test.out* .**
 
 - *test.est*
 This is a text file with the various estimates. Excluding the header, the first line reports (in order) the jackknife mean estimate, the standard error, the lower bound of the confidence interval at 95%, the upper bound of the confidence interval at 95% of the founder age. Second line for founder intensity (in %). Third line for the NRMSD.
