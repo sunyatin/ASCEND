@@ -54,7 +54,7 @@ For reliable estimation, use a minimum of 5 diploids in the target and outgroup 
 
 For best performance, we advise to use ~15 individuals for the outgroup population.
 
-# :feet: Full list parameters
+# :wrench: Full list of parameters
 
 Note that you can comment any line and option using "#" (the software will ignore those lines). Also, the options can be written in any order.
 
