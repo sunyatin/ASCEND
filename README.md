@@ -5,6 +5,18 @@
 
 - [ASCEND](#ASCEND)
   - [Tutorial](#tutorial)
+	- [Installation](#installation)
+	- [Requirements](#requirements)
+	- [Input](#input)
+	- [Command line](#command-line)
+	- [Full list of parameters](#full-list-of-parameters)
+	- [Output files](#output-files)
+	- [Full example](#full-example)
+	- [Typical parameter file for an aDNA analysis](#typical-aDNA)
+	- [Troubleshooting](#troubleshooting)
+	- [Version](#version)
+	- [License](#license)
+	- [Support](#support)
   - [References](#references)
 
 # :v: Tutorial
@@ -110,7 +122,7 @@ Note that you can comment any line and option using "#" (the software will ignor
 
 - `seed: None` seed for the random number generator, if None, will generate a random seed (default: None)
 
-# :tada: Output
+# :tada: Output files
 
 Each call to ASCEND outputs a set of 9 files (or only 7 if the `blocksizename` option is provided) that we describe hereunder:
 
@@ -244,3 +256,7 @@ This software is licensed for academic and non-profit use only.
 
 # :space_invader: Support
 Send queries to Rémi Tournebize (remi dot tournebize at gmail dot com) or Priya Moorjani (moorjani at berkeley dot edu).
+
+# :bookmark: References
+
+Tournebize, R., Chu, G., & Moorjani, P. (2022). Reconstructing the history of founder events using genome-wide patterns of allele sharing across individuals. PLoS Genetics, 18(6), e1010243.
