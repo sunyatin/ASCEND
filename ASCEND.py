@@ -60,6 +60,7 @@ binette, ainsi le petit Rensky a fait le coquelicot." - Ubu Roi
                                 => added the option `calculation_mode` with default value `auto` (otherwise `correlation` or `weighted_covariance` to force)
                                 => removed option `variance_correction_factor`
                                 => Naive: added lines (with suffix `# 080222`) to avoid warnings when dividing by null denominators + also added cp() to ASD_MATRIX* objects
+02 dec 2022:v v10.1: from v10.0: np.float deprecated => changed to float
 
 NB.
 [070222] FFT-correlation is better at handling missing data than Naive-correlation (by construction), leading to more accurate If estimates (for Tf, it makes no difference).
@@ -69,7 +70,7 @@ Improvements.
 
 """
 
-___version___ = '10.0'
+___version___ = '10.1'
 
 import numpy as np
 import time, sys, warnings, io, os, argparse, random
@@ -742,8 +743,8 @@ def correlation(M, INDEX, isDefined, bins_out, sub_bins):
         n = cp(isDefined[INDEX,i])
         n[INDEX==-1] = 0
 
-        x = x.astype(np.float)
-        n = n.astype(np.float)
+        x = x.astype(float)
+        n = n.astype(float)
 
         c = signal.correlate(x, x, mode = 'full', method = 'fft')
         npairs = signal.correlate(n, n, mode = 'full', method = 'fft')
@@ -1068,9 +1069,9 @@ def calculate_allele_sharing(input_prefix,
 
         if usefft == False:
 
-            BINS_R = np.asarray([0]*n_bins).astype(np.float)
-            BINS_Rbg = np.asarray([0]*n_bins).astype(np.float)
-            BINS_Rcor = np.asarray([0]*n_bins).astype(np.float)
+            BINS_R = np.asarray([0]*n_bins).astype(float)
+            BINS_Rbg = np.asarray([0]*n_bins).astype(float)
+            BINS_Rcor = np.asarray([0]*n_bins).astype(float)
             BINS_N = np.asarray([0]*n_bins).astype(np.int64)
             v_last = 0
             for i in range(nSNP):
