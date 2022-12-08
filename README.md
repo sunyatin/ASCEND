@@ -1,7 +1,11 @@
-# ASCEND
+# ASCEND <img align="right" width="200" src="https://github.com/sunyatin/DEMIURGES/blob/main/8.jpeg">
 ***ASCEND*** (**A**llele **S**haring **C**orrelation for the **E**stimation of **N**onequilibrium **D**emography) is a method to estimate the age and intensity of founder events/bottlenecks using population genotype data and a recombination map.
 
-:arrow_right: **Current version:** 10.0
+:arrow_right: **Current version:** 10.1
+
+- [ASCEND](#ASCEND)
+  - [Tutorial](#tutorial)
+  - [References](#references)
 
 # :v: Tutorial
 
@@ -226,6 +230,13 @@ If your input are in PACKED EIGENSTRAT format (i.e. the .geno file is binary), A
 `UnicodeDecodeError: 'utf-8' codec can't decode byte 0x86 in position 1936: invalid start byte`
 
 To solve this problem, you will have to convert your input dataset to EIGENSTRAT using `convertf`, cf. https://github.com/DReichLab/AdmixTools/tree/master/convertf
+
+### Too many None in the `*.out` file, no fit values
+If you have too many *None* in the `*.out` files or your `*.est` or `*.fit` values are *NA*, **check the units of your genetic distances!** They could be encoded in Morgans in your input files while you declared "morgans: NO" in the `*.par` file :)
+
+# :clock130: Version
+
+08.12.2022 : v10.1 : minor fix : np.float now deprecated, changed to float
 
 # :copyright: License
 
