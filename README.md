@@ -3,21 +3,20 @@
 
 :arrow_right: **Current version:** 10.1
 
-- [ASCEND](#ASCEND)
-  - [Tutorial](#tutorial)
-	- [Installation](#installation)
-	- [Requirements](#requirements)
-	- [Input](#input)
-	- [Command line](#command-line)
-	- [Full list of parameters](#full-list-of-parameters)
-	- [Output files](#output-files)
-	- [Full example](#full-example)
-	- [Typical parameter file for an aDNA analysis](#typical-aDNA)
-	- [Troubleshooting](#troubleshooting)
-	- [Version](#version)
-	- [License](#license)
-	- [Support](#support)
-  - [References](#references)
+- [Tutorial](#tutorial)
+- [Installation](#installation)
+- [Requirements](#requirements)
+- [Input](#input)
+- [Command line](#command-line)
+- [Full list of parameters](#full-list-of-parameters)
+- [Output files](#output-files)
+- [Full example](#full-example)
+- [Typical parameter file for an aDNA analysis](#typical-aDNA)
+- [Troubleshooting](#troubleshooting)
+- [Version](#version)
+- [License](#license)
+- [Support](#support)
+- [References](#references)
 
 # :v: Tutorial
 
@@ -244,7 +243,7 @@ If your input are in PACKED EIGENSTRAT format (i.e. the .geno file is binary), A
 To solve this problem, you will have to convert your input dataset to EIGENSTRAT using `convertf`, cf. https://github.com/DReichLab/AdmixTools/tree/master/convertf
 
 ### Too many None in the `*.out` file, no fit values
-If you have too many *None* in the `*.out` files or your `*.est` or `*.fit` values are *NA*, **check the units of your genetic distances!** They could be encoded in Morgans in your input files while you declared "morgans: NO" in the `*.par` file :)
+If you have too many *None* in the `*.out` file, or your `*.est` or `*.fit` values are *NA*, **check the units of your genetic distances!** They could be encoded in Morgans in your input files while you declared "morgans: NO" in the `*.par` file :)
 
 # :clock130: Version
 
