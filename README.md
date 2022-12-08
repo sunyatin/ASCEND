@@ -1,4 +1,4 @@
-# ASCEND <img align="right" width="200" src="https://github.com/sunyatin/DEMIURGES/blob/main/8.jpeg">
+# ASCEND <img align="right" width="200" src="https://github.com/sunyatin/ASCEND/blob/master/7.jpeg">
 ***ASCEND*** (**A**llele **S**haring **C**orrelation for the **E**stimation of **N**onequilibrium **D**emography) is a method to estimate the age and intensity of founder events/bottlenecks using population genotype data and a recombination map.
 
 :arrow_right: **Current version:** 10.1
