@@ -60,7 +60,9 @@ binette, ainsi le petit Rensky a fait le coquelicot." - Ubu Roi
                                 => added the option `calculation_mode` with default value `auto` (otherwise `correlation` or `weighted_covariance` to force)
                                 => removed option `variance_correction_factor`
                                 => Naive: added lines (with suffix `# 080222`) to avoid warnings when dividing by null denominators + also added cp() to ASD_MATRIX* objects
-02 dec 2022:v v10.1: from v10.0: np.float deprecated => changed to float
+02 dec 2022: v10.1: from v10.0: np.float deprecated => changed to float
+09 dec 2022: v10.1.1: from v10.1: added a condition to check that the genetic pos column in the input *.snp file is properly formatted
+                                  set np.seterr(invalid='ignore') to avoid the `RuntimeWarning: invalid value encountered in true_divide` warning
 
 NB.
 [070222] FFT-correlation is better at handling missing data than Naive-correlation (by construction), leading to more accurate If estimates (for Tf, it makes no difference).
@@ -70,7 +72,7 @@ Improvements.
 
 """
 
-___version___ = '10.1'
+___version___ = '10.1.1'
 
 import numpy as np
 import time, sys, warnings, io, os, argparse, random
@@ -88,6 +90,7 @@ def main():
 
     # np.seterr(divide='ignore', invalid='ignore', all='ignore')
     warnings.simplefilter('error', OptimizeWarning)
+    np.seterr(invalid='ignore')
 
     parser = argparse.ArgumentParser(description='ASCEND v'+str(___version___))
     parser.add_argument('-p', '--parfile', type=str, required=True, help='Name of the parameter file.')
@@ -856,7 +859,7 @@ def calculate_allele_sharing(input_prefix,
             sys.exit("ERROR! The chromosomes in the *.snp file are not contiguous.")
     del ix, CHR
 
-    if not '.' in str(D_FULL[0]):
+    if not '.' in str(D_FULL[0]) and not 'e-' in str(D_FULL[0]):
         sys.exit("The third column of the *.snp file should be proper genetic distances in Morgans or cM.")
     if input_distance_in_cM == False:
         print2(flog, 'Converting Morgans input into centiMorgans')

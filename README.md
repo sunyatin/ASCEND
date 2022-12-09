@@ -1,7 +1,7 @@
 # ASCEND <img align="right" width="200" src="https://github.com/sunyatin/ASCEND/blob/master/7.jpeg">
 ***ASCEND*** (**A**llele **S**haring **C**orrelation for the **E**stimation of **N**onequilibrium **D**emography) is a method to estimate the age and intensity of founder events/bottlenecks using population genotype data and a recombination map.
 
-:arrow_right: **Current version:** 10.1
+:arrow_right: **Current version:** 10.1.1 [09.12.2022]
 
 - [Tutorial](#tutorial)
 - [Installation](#installation)
@@ -248,6 +248,7 @@ If you have too many *None* in the `*.out` file, or your `*.est` or `*.fit` valu
 # :clock130: Version
 
 08.12.2022 : v10.1 : minor fix : np.float now deprecated, changed to float
+09.12.2022 : v10.1.1 : minor fix : silenced a warning when dividing by zero + added rule to check if genetic pos are properly formatted in the .snp file
 
 # :copyright: License
 
